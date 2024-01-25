@@ -11,7 +11,7 @@
 
 //==============================================================================
 CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &p)
-    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(p.synth.loopBuffer, *this)
+    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(p.synth.loopBuffer, *this), levelMeter(p.inputMagnitute, p.outputMagnitute)
 {
 
   int textBoxWidth = 80;
@@ -63,7 +63,9 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
   playDirKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
   addAndMakeVisible(playDirKnob);
 
+  // custom components
   addAndMakeVisible(waveViewer);
+  addAndMakeVisible(levelMeter);
 
   // Labels
   loopStartLabel.attachToComponent(&loopStartKnob, false);
@@ -127,6 +129,7 @@ void CaptureAudioProcessorEditor::resized()
   int padding = 20;
   int marginTop = 220;
 
+  levelMeter.setBounds(padding, padding, 100, 40);
   waveViewer.setBounds(padding, padding + 50, getWidth() - (padding * 2), 100);
 
   loopStartKnob.setBounds(padding, marginTop, knobWidth, knobHeight);

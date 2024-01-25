@@ -5,10 +5,13 @@
               companyWebsite="www.christian-grothe.com" pluginCharacteristicsValue="pluginWantsMidiIn">
   <MAINGROUP id="zI6ajl" name="Capture">
     <GROUP id="{6BFDDEF5-940A-7AB8-2795-7D9198F7C7D5}" name="Source">
+      <GROUP id="{2B41FDA7-0FA3-39E7-2679-2D0DEAAD531F}" name="gui">
+        <FILE id="PtwpYv" name="LevelMeter.h" compile="0" resource="0" file="Source/gui/LevelMeter.h"/>
+        <FILE id="YlzOP7" name="WaveViewer.cpp" compile="1" resource="0" file="Source/gui/WaveViewer.cpp"/>
+        <FILE id="ync0Hx" name="WaveViewer.h" compile="0" resource="0" file="Source/gui/WaveViewer.h"/>
+      </GROUP>
       <FILE id="P7L209" name="AudioBuffer.cpp" compile="1" resource="0" file="Source/AudioBuffer.cpp"/>
       <FILE id="jwGItv" name="AudioBuffer.h" compile="0" resource="0" file="Source/AudioBuffer.h"/>
-      <FILE id="erASWM" name="WaveViewer.cpp" compile="1" resource="0" file="Source/WaveViewer.cpp"/>
-      <FILE id="mVqJ9S" name="WaveViewer.h" compile="0" resource="0" file="Source/WaveViewer.h"/>
       <FILE id="wQ5M3T" name="Utils.h" compile="0" resource="0" file="Source/Utils.h"/>
       <FILE id="j6SUYh" name="Synth.cpp" compile="1" resource="0" file="Source/Synth.cpp"/>
       <FILE id="UXcalJ" name="Synth.h" compile="0" resource="0" file="Source/Synth.h"/>

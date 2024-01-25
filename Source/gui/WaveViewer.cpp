@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "WaveViewer.h"
-#include "PluginEditor.h"
+#include "../PluginEditor.h"
 
 //==============================================================================
 WaveViewer::WaveViewer(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_) : buffer(buffer_), editor(editor_)

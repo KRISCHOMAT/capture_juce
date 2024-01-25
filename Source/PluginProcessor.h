@@ -70,7 +70,8 @@ public:
   void getStateInformation(juce::MemoryBlock &destData) override;
   void setStateInformation(const void *data, int sizeInBytes) override;
 
-  juce::AudioBuffer<float> *currentOutput{nullptr};
+  float inputMagnitute{0.0f};
+  float outputMagnitute{0.0f};
 
   juce::AudioProcessorValueTreeState apvts{*this, nullptr, "Parameters", createParameterLayout()};
   Synth synth;

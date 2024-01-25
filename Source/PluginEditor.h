@@ -10,7 +10,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "WaveViewer.h"
+#include "gui/WaveViewer.h"
+#include "gui/LevelMeter.h"
 
 //==============================================================================
 /**
@@ -55,6 +56,7 @@ private:
 
     // Custom
     WaveViewer waveViewer;
+    LevelMeter levelMeter;
 
     using APVTS = juce::AudioProcessorValueTreeState;
     using SliderAttachment = APVTS::SliderAttachment;
