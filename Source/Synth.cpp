@@ -9,7 +9,6 @@
 */
 
 #include "Synth.h"
-#include "MyComponent.h"
 
 void Synth::setPlayHead(float playHead)
 {
@@ -71,22 +70,20 @@ void Synth::setLoopLength(float loopLength)
   }
 }
 
-void Synth::render(const float *readPtr, float *writePtr, int numSamples)
+void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 {
-  // int bufferSize = writeBuffer.getNumSamples();
-
   if (isRecording)
   {
-    record(readPtr, writePtr, numSamples);
+    record(readPtr, numSamples);
   }
 
-  clearBuffer(writePtr, numSamples);
+  clearBuffer(writePtrs, numSamples);
 
   for (int voice = 0; voice < VOICE_NUM; voice++)
   {
     if (voices[voice].getIsPlaying())
     {
-      voices[voice].render(writePtr, numSamples);
+      voices[voice].render(writePtrs, numSamples);
     }
   }
 }
@@ -105,10 +102,9 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
   }
 }
 
-void Synth::record(const float *readPtr, float *writePtr, int numSamples)
+void Synth::record(const float *readPtr, int numSamples)
 {
   int loopBufferSize = loopBuffer.getNumSamples();
-
   float *loopWritePtr = loopBuffer.getWritePtr();
 
   for (int sample = 0; sample < numSamples; sample++)
@@ -125,11 +121,12 @@ void Synth::record(const float *readPtr, float *writePtr, int numSamples)
   }
 }
 
-void Synth::clearBuffer(float *writePtr, int numSamples)
+void Synth::clearBuffer(float **writePtrs, int numSamples)
 {
   for (int sample = 0; sample < numSamples; sample++)
   {
-    writePtr[sample] = 0.0f;
+    writePtrs[0][sample] = 0.0f;
+    writePtrs[1][sample] = 0.0f;
   }
 }
 

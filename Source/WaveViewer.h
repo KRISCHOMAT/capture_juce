@@ -18,12 +18,12 @@ class AudioBuffer;
 //==============================================================================
 /*
  */
-class MyComponent : public juce::Component, public juce::Timer
+class WaveViewer : public juce::Component, public juce::Timer
 {
 public:
-  MyComponent(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_);
+  WaveViewer(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_);
 
-  ~MyComponent() override;
+  ~WaveViewer() override;
 
   void paint(juce::Graphics &) override;
   void resized() override;
@@ -44,5 +44,5 @@ private:
     return sum / static_cast<double>(endIndex - startIndex);
   }
 
-  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MyComponent)
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveViewer);
 };

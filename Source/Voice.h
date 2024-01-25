@@ -22,7 +22,7 @@ public:
   void setPlaySpeed(float playSpeed_);
   void setGrainTriggerRate(float rate);
   void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer);
-  void render(float *writePtr, int numSamples);
+  void render(float **writePtrs, int numSamples);
 
   void startPlaying(int note_);
   void stopPlaying();

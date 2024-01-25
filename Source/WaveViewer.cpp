@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MyComponent.cpp
+    WaveViewer.cpp
     Created: 21 Jan 2024 6:05:55pm
     Author:  christiangrothe
 
@@ -9,22 +9,22 @@
 */
 
 #include <JuceHeader.h>
-#include "MyComponent.h"
+#include "WaveViewer.h"
 #include "PluginEditor.h"
 
 //==============================================================================
-MyComponent::MyComponent(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_) : buffer(buffer_), editor(editor_)
+WaveViewer::WaveViewer(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_) : buffer(buffer_), editor(editor_)
 {
   // In your constructor, you should add any child components, and
   // initialise any special settings that your component needs.
   startTimer(10);
 }
 
-MyComponent::~MyComponent()
+WaveViewer::~WaveViewer()
 {
 }
 
-void MyComponent::paint(juce::Graphics &g)
+void WaveViewer::paint(juce::Graphics &g)
 {
   // Clear the background
   g.fillAll(juce::Colour::fromRGB(32, 62, 88));
@@ -73,13 +73,13 @@ void MyComponent::paint(juce::Graphics &g)
   g.fillRect(static_cast<float>(width * loopStart) + 1, 0.0f, static_cast<float>(width * loopLength), static_cast<float>(height));
 }
 
-void MyComponent::resized()
+void WaveViewer::resized()
 {
   // This method is where you should set the bounds of any child
   // components that your component contains..
 }
 
-void MyComponent::timerCallback()
+void WaveViewer::timerCallback()
 {
   repaint();
 }

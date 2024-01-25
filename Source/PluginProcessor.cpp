@@ -211,15 +211,6 @@ bool CaptureAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) c
 void CaptureAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-    // for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-    // {
-    //     buffer.clear(i, 0, buffer.getNumSamples());
-    // }
-
-    buffer.clear(1, 0, buffer.getNumSamples());
 
     bool expected = true;
     if (parametersChanged.compare_exchange_strong(expected, false))
@@ -227,8 +218,11 @@ void CaptureAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce:
         update();
     }
 
-    synth.render(buffer.getReadPointer(0), buffer.getWritePointer(0), buffer.getNumSamples());
+    float *writePtrs[2] = {buffer.getWritePointer(0), buffer.getWritePointer(1)};
+
+    synth.render(buffer.getReadPointer(0), writePtrs, buffer.getNumSamples());
     handleMidi(midiMessages);
+    currentOutput = &buffer;
 }
 
 void CaptureAudioProcessor::handleMidi(juce::MidiBuffer &midiMessages)

@@ -79,7 +79,7 @@ void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *
   }
 }
 
-void Voice::render(float *writePtr, int numSamples)
+void Voice::render(float **writePtrs, int numSamples)
 {
 
   for (int sample = 0; sample < numSamples; sample++)
@@ -87,7 +87,8 @@ void Voice::render(float *writePtr, int numSamples)
     setPlayHead();
     activateGrain();
     Output nextSamples = getGrainVals();
-    writePtr[sample] += nextSamples.left * 0.25;
+    writePtrs[0][sample] += nextSamples.left * 0.25;
+    writePtrs[1][sample] += nextSamples.right * 0.25;
   }
 }
 
@@ -124,9 +125,10 @@ void Voice::activateGrain()
       if (!grains[grain].isActive())
       {
         playHead = playHead < loopStart ? loopStart : playHead;
+        float withSpray = (playHead + spray > 1.0f) ? playHead : playHead + spray;
         float pos = (random.nextFloat() - 0.5f) * 2 * spreadFactor;
         bool isReverse = synth->grainDir == Synth::PlaybackDir::Normal ? false : true;
-        grains[grain].activateGrain(playHead + spray, grainLength, pos, pitch, isReverse);
+        grains[grain].activateGrain(withSpray, grainLength, pos, pitch, isReverse);
         break;
       }
     }
