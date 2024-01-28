@@ -68,7 +68,7 @@ void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *
   loopStart = 0.0f;
   loopLength = 1.0f;
 
-  env.init(sampleRate, 1.0f, [this]()
+  env.init(sampleRate, 0.1f, [this]()
            { 
             isPlaying = false;
             note = -1; });
@@ -87,8 +87,8 @@ void Voice::render(float **writePtrs, int numSamples)
     setPlayHead();
     activateGrain();
     Output nextSamples = getGrainVals();
-    writePtrs[0][sample] += nextSamples.left * 0.25;
-    writePtrs[1][sample] += nextSamples.right * 0.25;
+    writePtrs[0][sample] += (nextSamples.left) * 0.25;
+    writePtrs[1][sample] += (nextSamples.right) * 0.25;
   }
 }
 

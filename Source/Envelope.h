@@ -77,11 +77,11 @@ public:
     return level;
   }
 
-  void init(float sampleRate, float iniAttRel, std::function<void()> onEndedCb)
+  void init(float sampleRate, float initAttRel, std::function<void()> onEndedCb)
   {
     maxSamples = MAX_TIME * sampleRate;
-    setAttackMultiplier(iniAttRel);
-    setReleaseMultiploer(iniAttRel);
+    setAttackMultiplier(initAttRel);
+    setReleaseMultiploer(initAttRel);
     onEnded = onEndedCb;
   }
 

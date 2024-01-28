@@ -11,7 +11,7 @@
 
 //==============================================================================
 CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &p)
-    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(p.synth.loopBuffer, *this), levelMeter(p.inputMagnitute, p.outputMagnitute)
+    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(p.synth.loopBuffer, *this), levelMeter(p.inputRms, p.outputRmsL, p.outputRmsR)
 {
 
   int textBoxWidth = 80;
@@ -129,7 +129,7 @@ void CaptureAudioProcessorEditor::resized()
   int padding = 20;
   int marginTop = 220;
 
-  levelMeter.setBounds(padding, padding, 100, 40);
+  levelMeter.setBounds(padding, padding / 2, 100, 50);
   waveViewer.setBounds(padding, padding + 50, getWidth() - (padding * 2), 100);
 
   loopStartKnob.setBounds(padding, marginTop, knobWidth, knobHeight);

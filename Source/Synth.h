@@ -13,6 +13,7 @@
 #include "Voice.h"
 #include "Envelope.h"
 #include "AudioBuffer.h"
+#include "effects/delay.h"
 
 class Synth
 {
@@ -59,6 +60,7 @@ public:
   PlaybackDir grainDir;
   PlaybackDir playbackDir;
   AudioBuffer loopBuffer;
+  Delay delay;
 
 private:
   SynthState state{SynthState::Stop};

@@ -31,7 +31,7 @@ void WaveViewer::paint(juce::Graphics &g)
 
   int height = getHeight();
   int width = getWidth();
-  int scale = 20;
+  int scale = 5;
   int numSamples = buffer.getNumSamples();
   auto readPtr = buffer.getReadPtr();
 
