@@ -23,10 +23,10 @@ public:
     bufferR.resize(bufferSize);
   }
 
-  void write(float sampleL, float sampleR)
+  void write(Signal input)
   {
-    bufferL[writePos] = (sampleL * inputGain) + (bufferL[writePos] * feedback);
-    bufferR[writePos] = (sampleR * inputGain) + (bufferR[writePos] * feedback);
+    bufferL[writePos] = (input.left * inputGain) + (bufferL[writePos] * feedback);
+    bufferR[writePos] = (input.right * inputGain) + (bufferR[writePos] * feedback);
 
     if (writePos++ > bufferSize * delaytime)
     {
@@ -34,9 +34,9 @@ public:
     }
   }
 
-  Output nextSample()
+  Signal nextSample()
   {
-    Output output;
+    Signal output;
     output.left = bufferL[readPos];
     output.right = bufferR[readPos];
 

@@ -12,6 +12,7 @@
 #include <JuceHeader.h>
 #include "Grain.h"
 #include "Envelope.h"
+#include "Utils.h"
 
 class Synth;
 class AudioBuffer;
@@ -23,7 +24,7 @@ public:
   void setGrainTriggerRate(float rate);
   void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer);
   void render(float **writePtrs, int numSamples);
-  // Output render();
+  Signal render();
 
   void startPlaying(int note_);
   void stopPlaying();
@@ -69,6 +70,6 @@ private:
   float grainTriggerInc;  // counts from 0 to grainTriggerRate
 
   void activateGrain();
-  Output getGrainVals();
+  Signal getGrainVals();
   void setPlayHead();
 };

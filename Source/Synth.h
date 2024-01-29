@@ -20,8 +20,6 @@ class Synth
 public:
   void init(int totalChannelNum, int bufferSize, float sampleRate_);
   void render(const float *readPtr, float **writePtrs, int numSamples);
-  void record(const float *readPtr, int numSamples);
-  void clearBuffer(float **writePtrs, int numSamples);
 
   void handleMidi(uint8_t data1, uint8_t data2, uint8_t data3);
   void handleMidiCc(uint8_t cc, uint8_t val);

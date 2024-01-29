@@ -85,10 +85,19 @@ void Voice::render(float **writePtrs, int numSamples)
   {
     setPlayHead();
     activateGrain();
-    Output nextSamples = getGrainVals();
-    writePtrs[0][sample] += (nextSamples.left) * 0.25f;
-    writePtrs[1][sample] += (nextSamples.right) * 0.25f;
+    Signal nextSamples = getGrainVals();
+    writePtrs[0][sample] += nextSamples.left * 0.25f;
+    writePtrs[1][sample] += nextSamples.right * 0.25f;
   }
+}
+
+Signal Voice::render()
+{
+  setPlayHead();
+  activateGrain();
+  Signal voiceOut = getGrainVals();
+  voiceOut;
+  return voiceOut;
 }
 
 inline void Voice::setPlayHead()
@@ -136,15 +145,15 @@ void Voice::activateGrain()
   }
 }
 
-Output Voice::getGrainVals()
+Signal Voice::getGrainVals()
 {
-  Output output;
+  Signal output;
   float envVal = env.nextValue();
   for (int grain = 0; grain < GRAIN_NUMS; grain++)
   {
     if (grains[grain].isActive())
     {
-      Output newOutput = grains[grain].getValues();
+      Signal newOutput = grains[grain].getValues();
       output.left += newOutput.left * envVal;
       output.right += newOutput.right * envVal;
     }

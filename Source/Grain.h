@@ -12,12 +12,7 @@
 #include <JuceHeader.h>
 #include "GrainEnv.h"
 #include "AudioBuffer.h"
-
-struct Output
-{
-  float left;
-  float right;
-};
+#include "Utils.h"
 
 class Grain
 {
@@ -28,9 +23,9 @@ public:
     sampleRate = sampleRate_;
   }
 
-  Output getValues()
+  Signal getValues()
   {
-    Output output;
+    Signal output;
     if (active)
     {
       float envelope = grainEnv.nextValue();

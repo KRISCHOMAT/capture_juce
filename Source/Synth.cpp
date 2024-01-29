@@ -82,28 +82,46 @@ void Synth::setDelaytime(float delaytime)
 
 void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 {
-  if (isRecording)
-  {
-    record(readPtr, numSamples);
-  }
 
-  clearBuffer(writePtrs, numSamples);
+  int loopBufferSize = loopBuffer.getNumSamples();
+  float *loopWritePtr = loopBuffer.getWritePtr();
 
-  for (int voice = 0; voice < VOICE_NUM; voice++)
+  for (int sample = 0; sample < numSamples; sample++)
   {
-    if (voices[voice].getIsPlaying())
+    Signal output;
+
+    if (isRecording)
     {
-      voices[voice].render(writePtrs, numSamples);
-    }
-  }
+      loopWritePtr[writePos] = readPtr[sample];
+      writePos++;
 
-  // for (int i = 0; i < numSamples; i++)
-  // {
-  //   delay.write(writePtrs[0][i], writePtrs[1][i]);
-  //   Output dlOut = delay.nextSample();
-  //   writePtrs[0][i] += dlOut.left;
-  //   writePtrs[1][i] += dlOut.right;
-  // }
+      if (writePos > loopBufferSize)
+      {
+        writePos = 0;
+        isRecording = false;
+      }
+    }
+
+    writePtrs[0][sample] = 0.0f;
+    writePtrs[1][sample] = 0.0f;
+
+    for (int voice = 0; voice < VOICE_NUM; voice++)
+    {
+      if (voices[voice].getIsPlaying())
+      {
+        output += voices[voice].render();
+      }
+    }
+
+    output *= 0.25;
+
+    delay.write(output);
+    Signal delayOut = delay.nextSample();
+    output += delayOut;
+
+    writePtrs[0][sample] += output.left;
+    writePtrs[1][sample] += output.right;
+  }
 }
 
 void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
@@ -118,34 +136,6 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
   for (int voice = 0; voice < VOICE_NUM; voice++)
   {
     voices[voice].init(totalChannelNum, bufferSize, sampleRate_, this, &loopBuffer);
-  }
-}
-
-void Synth::record(const float *readPtr, int numSamples)
-{
-  int loopBufferSize = loopBuffer.getNumSamples();
-  float *loopWritePtr = loopBuffer.getWritePtr();
-
-  for (int sample = 0; sample < numSamples; sample++)
-  {
-    loopWritePtr[writePos] = readPtr[sample];
-    writePos++;
-
-    if (writePos > loopBufferSize)
-    {
-      writePos = 0;
-      isRecording = false;
-      break;
-    }
-  }
-}
-
-void Synth::clearBuffer(float **writePtrs, int numSamples)
-{
-  for (int sample = 0; sample < numSamples; sample++)
-  {
-    writePtrs[0][sample] = 0.0f;
-    writePtrs[1][sample] = 0.0f;
   }
 }
 
