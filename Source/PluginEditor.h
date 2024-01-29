@@ -42,6 +42,8 @@ private:
     juce::Slider spreadKnob;
     juce::Slider grainDirKnob;
     juce::Slider playDirKnob;
+    juce::Slider delaytimeKnob;
+    juce::Slider delayFeedbackKnob;
 
     // Labels
     juce::Label loopStartLabel;
@@ -97,5 +99,13 @@ private:
         audioProcessor.apvts,
         ParameterID::playDir.getParamID(),
         playDirKnob};
+    SliderAttachment delaytimeAttachment{
+        audioProcessor.apvts,
+        ParameterID::delaytime.getParamID(),
+        delaytimeKnob};
+    SliderAttachment delayFeedbackAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayFeedback.getParamID(),
+        delayFeedbackKnob};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CaptureAudioProcessorEditor)
 };

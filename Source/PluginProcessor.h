@@ -24,6 +24,8 @@ namespace ParameterID
   PARAMETER_ID(spread)
   PARAMETER_ID(grainDir)
   PARAMETER_ID(playDir)
+  PARAMETER_ID(delaytime)
+  PARAMETER_ID(delayFeedback)
 }
 
 //==============================================================================
@@ -91,6 +93,8 @@ private:
   juce::AudioParameterFloat *spreadParam;
   juce::AudioParameterChoice *grainDirParam;
   juce::AudioParameterChoice *playDirParam;
+  juce::AudioParameterFloat *delaytimeParam;
+  juce::AudioParameterFloat *delayFeedbackParam;
 
   void valueTreePropertyChanged(juce::ValueTree &, const juce::Identifier &) override
   {

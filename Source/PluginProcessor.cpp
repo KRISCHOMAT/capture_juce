@@ -33,6 +33,8 @@ CaptureAudioProcessor::CaptureAudioProcessor()
     castParameter(apvts, ParameterID::spread, spreadParam);
     castParameter(apvts, ParameterID::grainDir, grainDirParam);
     castParameter(apvts, ParameterID::playDir, playDirParam);
+    castParameter(apvts, ParameterID::delayFeedback, delayFeedbackParam);
+    castParameter(apvts, ParameterID::delaytime, delaytimeParam);
 
     apvts.state.addListener(this);
 }
@@ -103,6 +105,20 @@ juce::AudioProcessorValueTreeState::ParameterLayout CaptureAudioProcessor::creat
         ParameterID::playDir,
         "Play Direction",
         juce::StringArray{"Forward", "Reverse", "Back & Forth"}, 0));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayFeedback,
+        "Feedback",
+        juce::NormalisableRange<float>(0.1f, 0.99f, 0.01f),
+        0.5f,
+        juce::AudioParameterFloatAttributes().withLabel("%")));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delaytime,
+        "Time",
+        juce::NormalisableRange<float>(0.01f, 0.99, 0.01f),
+        0.5f,
+        juce::AudioParameterFloatAttributes().withLabel("%")));
 
     return layout;
 }
@@ -289,6 +305,8 @@ void CaptureAudioProcessor::update()
     synth.setSpread(spreadParam->get() / 100.0f);
     synth.setLoopStart(loopStartParam->get() / 100.0f);
     synth.setLoopLength(loopLengthParam->get() / 100.0f);
+    synth.setDelayFeedback(delayFeedbackParam->get());
+    synth.setDelaytime(delaytimeParam->get());
 
     synth.playbackDir = static_cast<Synth::PlaybackDir>(playDirParam->getIndex());
     synth.grainDir = static_cast<Synth::PlaybackDir>(grainDirParam->getIndex());

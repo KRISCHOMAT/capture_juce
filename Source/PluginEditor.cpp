@@ -63,6 +63,16 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
   playDirKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
   addAndMakeVisible(playDirKnob);
 
+  delaytimeKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+  delaytimeKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+  addAndMakeVisible(delaytimeKnob);
+
+  delayFeedbackKnob.setSliderStyle(
+      juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+  delayFeedbackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+  addAndMakeVisible(delayFeedbackKnob);
+
   // custom components
   addAndMakeVisible(waveViewer);
   addAndMakeVisible(levelMeter);
@@ -141,4 +151,6 @@ void CaptureAudioProcessorEditor::resized()
   spreadKnob.setBounds(padding + knobWidth * 6, marginTop, knobWidth, knobHeight);
   grainDirKnob.setBounds(padding, marginTop + knobHeight + 50, knobWidth, knobHeight);
   playDirKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight + 50, knobWidth, knobHeight);
+  delayFeedbackKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
+  delaytimeKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
 }

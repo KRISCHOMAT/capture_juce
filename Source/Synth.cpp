@@ -70,6 +70,16 @@ void Synth::setLoopLength(float loopLength)
   }
 }
 
+void Synth::setDelayFeedback(float feedback)
+{
+  delay.setFeedback(feedback);
+}
+
+void Synth::setDelaytime(float delaytime)
+{
+  delay.setDelaytime(delaytime);
+}
+
 void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 {
   if (isRecording)
@@ -89,17 +99,17 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 
   for (int i = 0; i < numSamples; i++)
   {
-    delay.write(writePtrs[0][i]);
-    float nextSample = delay.nextSample();
-    writePtrs[0][i] += nextSample;
-    writePtrs[1][i] += nextSample;
+    delay.write(writePtrs[0][i], writePtrs[1][i]);
+    Output dlOut = delay.nextSample();
+    writePtrs[0][i] += dlOut.left;
+    writePtrs[1][i] += dlOut.right;
   }
 }
 
 void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 {
   loopBuffer.setSize(bufferSize);
-  delay.setSize(sampleRate_ * 10);
+  delay.setSize(sampleRate_ * 5);
   writePos = 0.0f;
   isRecording = false;
   playbackDir = PlaybackDir::Normal;

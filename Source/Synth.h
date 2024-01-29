@@ -34,6 +34,8 @@ public:
   void setSpread(float spreadFactor_);
   void setLoopStart(float loopStart);
   void setLoopLength(float loopLength);
+  void setDelaytime(float delaytime);
+  void setDelayFeedback(float feedback);
 
   enum MidiCommands
   {

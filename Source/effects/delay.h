@@ -11,6 +11,12 @@
 #pragma once
 #include <JuceHeader.h>
 
+struct output
+{
+  float left;
+  float right;
+};
+
 class Delay
 {
 public:
@@ -22,28 +28,38 @@ public:
     bufferR.resize(bufferSize);
   }
 
-  void write(float sample)
+  void write(float sampleL, float sampleR)
   {
-    bufferL[writePos] = (sample * inputGain) + (bufferL[writePos] * feedback);
-    if (writePos++ > bufferSize * delayTime)
+    bufferL[writePos] = (sampleL * inputGain) + (bufferL[writePos] * feedback);
+    bufferR[writePos] = (sampleR * inputGain) + (bufferR[writePos] * feedback);
+
+    if (writePos++ > bufferSize * delaytime)
     {
       writePos = 0;
     }
   }
 
-  float nextSample()
+  Output nextSample()
   {
-    float next = bufferL[readPos];
-    if (readPos++ > bufferSize * delayTime)
+    Output output;
+    output.left = bufferL[readPos];
+    output.right = bufferR[readPos];
+
+    if (readPos++ > bufferSize * delaytime)
     {
       readPos = 0;
     }
-    return next;
+    return output;
   }
 
   void setFeedback(float feedback_)
   {
     feedback = feedback_;
+  }
+
+  void setDelaytime(float delaytime_)
+  {
+    delaytime = delaytime_;
   }
 
   void setInputGain(float inputGain_)
@@ -61,7 +77,7 @@ private:
   int readPos{0};
   int bufferSize;
 
-  float delayTime{0.01f};
+  float delaytime{0.01f};
 
   float feedback{0.99f};
   float inputGain{1.0f};
