@@ -10,12 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
-
-struct output
-{
-  float left;
-  float right;
-};
+#include "../Utils.h"
 
 class Delay
 {

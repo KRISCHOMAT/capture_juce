@@ -18,3 +18,21 @@ inline static void castParameter(juce::AudioProcessorValueTreeState &apvts,
   destination = dynamic_cast<T>(apvts.getParameter(id.getParamID()));
   jassert(destination);
 }
+
+struct Output
+{
+  float left;
+  float right;
+
+  void operator+=(Output const &other)
+  {
+    left += other.left;
+    right += other.right;
+  }
+
+  void operator*=(float gain)
+  {
+    left *= gain;
+    right *= gain;
+  }
+};
