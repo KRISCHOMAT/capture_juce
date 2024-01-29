@@ -19,20 +19,20 @@ inline static void castParameter(juce::AudioProcessorValueTreeState &apvts,
   jassert(destination);
 }
 
-struct Output
-{
-  float left;
-  float right;
+// struct Output
+// {
+//   float left;
+//   float right;
 
-  void operator+=(Output const &other)
-  {
-    left += other.left;
-    right += other.right;
-  }
+//   void operator+=(Output const &other)
+//   {
+//     left += other.left;
+//     right += other.right;
+//   }
 
-  void operator*=(float gain)
-  {
-    left *= gain;
-    right *= gain;
-  }
-};
+//   void operator*=(float gain)
+//   {
+//     left *= gain;
+//     right *= gain;
+//   }
+// };

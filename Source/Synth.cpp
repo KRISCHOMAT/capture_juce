@@ -89,26 +89,21 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 
   clearBuffer(writePtrs, numSamples);
 
-  Output output;
-
-  for (int i = 0; i < numSamples; i++)
+  for (int voice = 0; voice < VOICE_NUM; voice++)
   {
-    for (int voice = 0; voice < VOICE_NUM; voice++)
+    if (voices[voice].getIsPlaying())
     {
-      if (voices[voice].getIsPlaying())
-      {
-        output += voices[voice].render();
-      }
+      voices[voice].render(writePtrs, numSamples);
     }
-    delay.write(writePtrs[0][i], writePtrs[1][i]);
-    Output dlOut = delay.nextSample();
-
-    output *= 0.25;
-    output += dlOut;
-
-    writePtrs[0][i] += output.left;
-    writePtrs[1][i] += output.right;
   }
+
+  // for (int i = 0; i < numSamples; i++)
+  // {
+  //   delay.write(writePtrs[0][i], writePtrs[1][i]);
+  //   Output dlOut = delay.nextSample();
+  //   writePtrs[0][i] += dlOut.left;
+  //   writePtrs[1][i] += dlOut.right;
+  // }
 }
 
 void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)

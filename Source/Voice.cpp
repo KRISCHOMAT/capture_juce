@@ -79,12 +79,16 @@ void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *
   }
 }
 
-Output Voice::render()
+void Voice::render(float **writePtrs, int numSamples)
 {
-  setPlayHead();
-  activateGrain();
-  Output nextSamples = getGrainVals();
-  return nextSamples;
+  for (int sample = 0; sample < numSamples; sample++)
+  {
+    setPlayHead();
+    activateGrain();
+    Output nextSamples = getGrainVals();
+    writePtrs[0][sample] += (nextSamples.left) * 0.25f;
+    writePtrs[1][sample] += (nextSamples.right) * 0.25f;
+  }
 }
 
 inline void Voice::setPlayHead()

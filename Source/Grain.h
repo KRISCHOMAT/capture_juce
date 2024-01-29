@@ -12,7 +12,12 @@
 #include <JuceHeader.h>
 #include "GrainEnv.h"
 #include "AudioBuffer.h"
-#include "Utils.h"
+
+struct Output
+{
+  float left;
+  float right;
+};
 
 class Grain
 {
