@@ -44,6 +44,9 @@ private:
     juce::Slider playDirKnob;
     juce::Slider delaytimeKnob;
     juce::Slider delayFeedbackKnob;
+    juce::Slider delayCharacterKnob;
+    juce::Slider delayInputGainKnob;
+    juce::Slider delayOutputGainKnob;
 
     // Labels
     juce::Label loopStartLabel;
@@ -107,5 +110,18 @@ private:
         audioProcessor.apvts,
         ParameterID::delayFeedback.getParamID(),
         delayFeedbackKnob};
+    SliderAttachment delayCharacterAttachment{
+        audioProcessor.apvts,
+        ParameterID::interpolationTime.getParamID(),
+        delayCharacterKnob};
+    SliderAttachment delayInputGainAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayInputGain.getParamID(),
+        delayInputGainKnob};
+    SliderAttachment delayOutputGainAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayOutputGain.getParamID(),
+        delayOutputGainKnob};
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CaptureAudioProcessorEditor)
 };

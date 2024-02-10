@@ -9,7 +9,7 @@
 */
 
 #pragma once
-#include <JuceHeader.h>
+#include <math.h>
 #include "GrainEnv.h"
 #include "AudioBuffer.h"
 #include "Utils.h"
@@ -97,36 +97,6 @@ private:
   bool active{false};
   bool isReverse;
 
-  template <typename Float>
-  inline Float cubicHermiteSpline(const Float *buffer, const Float readHead, const int size) noexcept
-  {
-    const auto iFloor = std::floor(readHead);
-    auto i1 = static_cast<int>(iFloor);
-    auto i0 = i1 - 1;
-    auto i2 = i1 + 1;
-    auto i3 = i1 + 2;
-
-    if (i3 >= size)
-      i3 -= size;
-    if (i2 >= size)
-      i2 -= size;
-    if (i0 < 0)
-      i0 += size;
-
-    const auto t = readHead - iFloor;
-    const auto v0 = buffer[i0];
-    const auto v1 = buffer[i1];
-    const auto v2 = buffer[i2];
-    const auto v3 = buffer[i3];
-
-    const auto c0 = v1;
-    const auto c1 = static_cast<Float>(.5) * (v2 - v0);
-    const auto c2 = v0 - static_cast<Float>(2.5) * v1 + static_cast<Float>(2.) * v2 - static_cast<Float>(.5) * v3;
-    const auto c3 = static_cast<Float>(1.5) * (v1 - v2) + static_cast<Float>(.5) * (v3 - v0);
-
-    return ((c3 * t + c2) * t + c1) * t + c0;
-  }
-
   float getNextSample()
   {
     if (!active)
@@ -135,13 +105,13 @@ private:
     }
 
     int loopBufferLength = loopBuffer->getNumSamples();
-    const float *loopBufferDataL = loopBuffer->getReadPtr();
+    const float *loopBufferData = loopBuffer->getReadPtr();
 
     float sampleOffset = (loopBufferLength - grainLength) * offset;
 
     float index = phasor * (grainLength - 1);
     index += sampleOffset;
-    auto sample = cubicHermiteSpline(loopBufferDataL, index, loopBufferLength);
+    auto sample = cubicHermiteSpline(loopBufferData, index, loopBufferLength);
 
     return sample;
   }

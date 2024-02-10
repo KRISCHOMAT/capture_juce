@@ -7,6 +7,7 @@
     <GROUP id="{6BFDDEF5-940A-7AB8-2795-7D9198F7C7D5}" name="Source">
       <GROUP id="{68A12E75-9A22-2490-148B-D0785DDF109E}" name="effects">
         <FILE id="bHttyj" name="delay.h" compile="0" resource="0" file="Source/effects/delay.h"/>
+        <FILE id="Mi5Sjp" name="modulation.h" compile="0" resource="0" file="Source/effects/modulation.h"/>
       </GROUP>
       <GROUP id="{2B41FDA7-0FA3-39E7-2679-2D0DEAAD531F}" name="gui">
         <FILE id="PtwpYv" name="LevelMeter.h" compile="0" resource="0" file="Source/gui/LevelMeter.h"/>

@@ -9,7 +9,8 @@
 */
 
 #pragma once
-#include <JuceHeader.h>
+#include <math.h>
+#include <functional>
 
 class Envelope
 {

@@ -8,7 +8,14 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "Utils.h"
+
+template <typename T>
+inline static void castParameter(juce::AudioProcessorValueTreeState &apvts,
+                                 const juce::ParameterID &id, T &destination)
+{
+    destination = dynamic_cast<T>(apvts.getParameter(id.getParamID()));
+    jassert(destination);
+}
 
 //==============================================================================
 CaptureAudioProcessor::CaptureAudioProcessor()
@@ -35,6 +42,9 @@ CaptureAudioProcessor::CaptureAudioProcessor()
     castParameter(apvts, ParameterID::playDir, playDirParam);
     castParameter(apvts, ParameterID::delayFeedback, delayFeedbackParam);
     castParameter(apvts, ParameterID::delaytime, delaytimeParam);
+    castParameter(apvts, ParameterID::interpolationTime, interpolationTimeParam);
+    castParameter(apvts, ParameterID::delayInputGain, delayInputGainParam);
+    castParameter(apvts, ParameterID::delayOutputGain, delayOutputGainParam);
 
     apvts.state.addListener(this);
 }
@@ -109,17 +119,34 @@ juce::AudioProcessorValueTreeState::ParameterLayout CaptureAudioProcessor::creat
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         ParameterID::delayFeedback,
         "Feedback",
-        juce::NormalisableRange<float>(0.1f, 0.99f, 0.01f),
+        juce::NormalisableRange<float>(0.01f, 2.0f, 0.01f),
         0.5f,
         juce::AudioParameterFloatAttributes().withLabel("%")));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>(
         ParameterID::delaytime,
         "Time",
-        juce::NormalisableRange<float>(0.01f, 0.99, 0.01f),
+        juce::NormalisableRange<float>(0.01f, 1.0f, 0.01f),
         0.5f,
         juce::AudioParameterFloatAttributes().withLabel("%")));
 
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::interpolationTime,
+        "Interpolation Time",
+        juce::NormalisableRange<float>(0.01f, 1.0f, 0.01f),
+        0.01f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayInputGain,
+        "Input Gain",
+        juce::NormalisableRange<float>(0.0f, 1.0f, 0.01f),
+        0.01f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayOutputGain,
+        "Output Gain",
+        juce::NormalisableRange<float>(0.0f, 1.0f, 0.01f),
+        0.01f));
     return layout;
 }
 
@@ -307,6 +334,9 @@ void CaptureAudioProcessor::update()
     synth.setLoopLength(loopLengthParam->get() / 100.0f);
     synth.setDelayFeedback(delayFeedbackParam->get());
     synth.setDelaytime(delaytimeParam->get());
+    synth.setInterpolationTime(interpolationTimeParam->get());
+    synth.setDelayInputGain(delayInputGainParam->get());
+    synth.setDelayOutputGain(delayOutputGainParam->get());
 
     synth.playbackDir = static_cast<Synth::PlaybackDir>(playDirParam->getIndex());
     synth.grainDir = static_cast<Synth::PlaybackDir>(grainDirParam->getIndex());

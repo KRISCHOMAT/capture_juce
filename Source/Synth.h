@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include <JuceHeader.h>
 #include "Voice.h"
 #include "Envelope.h"
 #include "AudioBuffer.h"
@@ -34,6 +33,9 @@ public:
   void setLoopLength(float loopLength);
   void setDelaytime(float delaytime);
   void setDelayFeedback(float feedback);
+  void setInterpolationTime(float character);
+  void setDelayInputGain(float inputGain);
+  void setDelayOutputGain(float outputGain);
 
   enum MidiCommands
   {

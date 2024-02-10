@@ -53,11 +53,11 @@ private:
     float smoothedOutputRmsL{0.0f};
     float smoothedOutputRmsR{0.0f};
 
-    void smooth(float &smoothedInput, const float &input, float alpha = 0.4f)
+    void smooth(float &smoothedInput, const float &input, float alpha = 0.8f)
     {
-        float inputLog = 20.0f * log10(input); // Convert to logarithmic scale (dB)
+        float inputLog = 20.0f * log10(input);
         float smoothedLog = alpha * inputLog + (1 - alpha) * smoothedLog;
-        smoothedInput = pow(10, smoothedLog / 20.0f); // Convert back to linear scale
+        smoothedInput = pow(10, smoothedLog / 20.0f);
     }
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LevelMeter)

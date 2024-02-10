@@ -9,6 +9,7 @@
 */
 
 #include "Synth.h"
+#include <cstdint>
 
 void Synth::setPlayHead(float playHead)
 {
@@ -80,6 +81,21 @@ void Synth::setDelaytime(float delaytime)
   delay.setDelaytime(delaytime);
 }
 
+void Synth::setInterpolationTime(float character)
+{
+  delay.setInterpolationTime(character);
+}
+
+void Synth::setDelayInputGain(float inputGain)
+{
+  delay.setInputGain(inputGain);
+}
+
+void Synth::setDelayOutputGain(float outputGain)
+{
+  delay.setOutputGain(outputGain);
+}
+
 void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 {
 
@@ -114,10 +130,7 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
     }
 
     output *= 0.25;
-
-    delay.write(output);
-    Signal delayOut = delay.nextSample();
-    output += delayOut;
+    output += delay.render(output);
 
     writePtrs[0][sample] += output.left;
     writePtrs[1][sample] += output.right;
@@ -127,7 +140,7 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 {
   loopBuffer.setSize(bufferSize);
-  delay.setSize(sampleRate_ * 5);
+  delay.setSize(sampleRate_ * 1, sampleRate_);
   writePos = 0.0f;
   isRecording = false;
   playbackDir = PlaybackDir::Normal;
@@ -173,7 +186,7 @@ void Synth::handleMidi(uint8_t data1, uint8_t data2, uint8_t data3)
     break;
 
   default:
-    DBG("other message " << data1 << " " << data2 << " " << data3);
+    // DBG("other message " << data1 << " " << data2 << " " << data3);
     break;
   }
 }
