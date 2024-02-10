@@ -49,6 +49,8 @@ private:
     juce::Slider delayOutputGainKnob;
     juce::Slider attackKnob;
     juce::Slider releaseKnob;
+    juce::Slider delayModDepthKnob;
+    juce::Slider delayModSpeedKnob;
 
     // Labels
     juce::Label loopStartLabel;
@@ -67,6 +69,8 @@ private:
     juce::Label dlLazynessLabel;
     juce::Label dlInputLabel;
     juce::Label dlOuputLabel;
+    juce::Label dlModDepthLabel;
+    juce::Label dlModSpeedLabel;
 
     // Custom
     WaveViewer waveViewer;
@@ -139,5 +143,13 @@ private:
         audioProcessor.apvts,
         ParameterID::release.getParamID(),
         releaseKnob};
+    SliderAttachment dlModSpeedAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayModSpeed.getParamID(),
+        delayModSpeedKnob};
+    SliderAttachment dlModDepthAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayModDepth.getParamID(),
+        delayModDepthKnob};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CaptureAudioProcessorEditor)
 };

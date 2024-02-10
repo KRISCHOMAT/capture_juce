@@ -21,13 +21,19 @@ public:
   {
     mod.modulationDepth = modulationDepth;
   }
+  void setModulationSpeed(float modulationSpeed)
+  {
+    mod.inc = modulationSpeed / sampleRate;
+    mod.reset();
+  }
   void setSize(int bufferSize_, float sampleRate_)
   {
     bufferSize = bufferSize_;
     bufferL.resize(bufferSize);
     bufferR.resize(bufferSize);
+    sampleRate = sampleRate_;
     mod.modulationDepth = 0.0f;
-    mod.inc = 0.1f / sampleRate_;
+    mod.inc = 0.1f / sampleRate;
     mod.reset();
   }
 
@@ -112,6 +118,7 @@ private:
   int newReadPos{0};
   float interpolationTime{0.001f};
   int bufferSize;
+  float sampleRate;
 
   Modulation mod;
 

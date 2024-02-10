@@ -110,6 +110,16 @@ void Synth::setDelayOutputGain(float outputGain)
   delay.setOutputGain(outputGain);
 }
 
+void Synth::setDelayModDepth(float depth)
+{
+  delay.setModulationDepth(depth);
+}
+
+void Synth::setDelayModSpeed(float speed)
+{
+  delay.setModulationSpeed(speed);
+}
+
 void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 {
 

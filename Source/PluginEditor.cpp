@@ -98,6 +98,16 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     attackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
     addAndMakeVisible(attackKnob);
 
+    delayModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayModDepthKnob);
+
+    delayModSpeedKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayModSpeedKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+
+    addAndMakeVisible(delayModSpeedKnob);
     // custom components
     addAndMakeVisible(waveViewer);
     addAndMakeVisible(levelMeter);
@@ -152,7 +162,7 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     dlFeedbackLabel.setJustificationType(juce::Justification::centred);
 
     dlTimeLabel.attachToComponent(&delaytimeKnob, false);
-    dlTimeLabel.setText("Feedback", juce::NotificationType::dontSendNotification);
+    dlTimeLabel.setText("Time", juce::NotificationType::dontSendNotification);
     dlTimeLabel.setJustificationType(juce::Justification::centred);
 
     dlLazynessLabel.attachToComponent(&delayLazynessKnob, false);
@@ -166,6 +176,14 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     dlOuputLabel.attachToComponent(&delayOutputGainKnob, false);
     dlOuputLabel.setText("Output", juce::NotificationType::dontSendNotification);
     dlOuputLabel.setJustificationType(juce::Justification::centred);
+
+    dlModSpeedLabel.attachToComponent(&delayModSpeedKnob, false);
+    dlModSpeedLabel.setText("Mod-Speed", juce::NotificationType::dontSendNotification);
+    dlModSpeedLabel.setJustificationType(juce::Justification::centred);
+
+    dlModDepthLabel.attachToComponent(&delayModDepthKnob, false);
+    dlModDepthLabel.setText("Mod-Depth", juce::NotificationType::dontSendNotification);
+    dlModDepthLabel.setJustificationType(juce::Justification::centred);
     setSize(600, 850);
 }
 
@@ -204,10 +222,10 @@ void CaptureAudioProcessorEditor::resized()
     spreadKnob.setBounds(padding + knobWidth * 6, marginTop, knobWidth, knobHeight);
 
     // grainDir & Env
-    grainDirKnob.setBounds(padding, marginTop + knobHeight + 50, knobWidth, knobHeight);
-    playDirKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight + 50, knobWidth, knobHeight);
-    attackKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight + 50, knobWidth, knobHeight);
-    releaseKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight + 50, knobWidth, knobHeight);
+    grainDirKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight + 50, knobWidth, knobHeight);
+    playDirKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight + 50, knobWidth, knobHeight);
+    attackKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight + 50, knobWidth, knobHeight);
+    releaseKnob.setBounds(padding + knobWidth * 5, marginTop + knobHeight + 50, knobWidth, knobHeight);
 
     // Delay Row
     delayFeedbackKnob.setBounds(padding, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
@@ -215,4 +233,6 @@ void CaptureAudioProcessorEditor::resized()
     delayLazynessKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
     delayInputGainKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
     delayOutputGainKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delayModSpeedKnob.setBounds(padding + knobWidth * 5, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delayModDepthKnob.setBounds(padding + knobWidth * 6, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
 }

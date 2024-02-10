@@ -38,6 +38,8 @@ public:
   void setInterpolationTime(float character);
   void setDelayInputGain(float inputGain);
   void setDelayOutputGain(float outputGain);
+  void setDelayModDepth(float modDepth);
+  void setDelayModSpeed(float modSpeed);
 
   enum MidiCommands
   {

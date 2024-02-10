@@ -31,6 +31,8 @@ namespace ParameterID
   PARAMETER_ID(delayOutputGain)
   PARAMETER_ID(attack)
   PARAMETER_ID(release)
+  PARAMETER_ID(delayModSpeed)
+  PARAMETER_ID(delayModDepth)
 }
 
 //==============================================================================
@@ -103,6 +105,8 @@ private:
   juce::AudioParameterFloat *interpolationTimeParam;
   juce::AudioParameterFloat *delayOutputGainParam;
   juce::AudioParameterFloat *delayInputGainParam;
+  juce::AudioParameterFloat *delayModDepthParam;
+  juce::AudioParameterFloat *delayModSpeedParam;
   juce::AudioParameterFloat *attackParam;
   juce::AudioParameterFloat *releaseParam;
 
