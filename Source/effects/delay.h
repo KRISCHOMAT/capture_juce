@@ -17,12 +17,16 @@
 class Delay
 {
 public:
+  void setModulationDepth(float modulationDepth)
+  {
+    mod.modulationDepth = modulationDepth;
+  }
   void setSize(int bufferSize_, float sampleRate_)
   {
     bufferSize = bufferSize_;
     bufferL.resize(bufferSize);
     bufferR.resize(bufferSize);
-    mod.amplitude = 0.2f;
+    mod.modulationDepth = 0.0f;
     mod.inc = 0.1f / sampleRate_;
     mod.reset();
   }

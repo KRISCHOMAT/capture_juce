@@ -29,6 +29,8 @@ namespace ParameterID
   PARAMETER_ID(interpolationTime)
   PARAMETER_ID(delayInputGain)
   PARAMETER_ID(delayOutputGain)
+  PARAMETER_ID(attack)
+  PARAMETER_ID(release)
 }
 
 //==============================================================================
@@ -101,6 +103,8 @@ private:
   juce::AudioParameterFloat *interpolationTimeParam;
   juce::AudioParameterFloat *delayOutputGainParam;
   juce::AudioParameterFloat *delayInputGainParam;
+  juce::AudioParameterFloat *attackParam;
+  juce::AudioParameterFloat *releaseParam;
 
   void valueTreePropertyChanged(juce::ValueTree &, const juce::Identifier &) override
   {

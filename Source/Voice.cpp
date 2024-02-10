@@ -18,6 +18,16 @@ void Voice::setPlaySpeed(float playSpeed_)
   playHeadInc = (1 / loopBufferSize) * playBackSpeed;
 }
 
+void Voice::setAttack(float attack)
+{
+  env.setAttackMultiplier(attack);
+}
+
+void Voice::setRelease(float release)
+{
+  env.setReleaseMultiploer(release);
+}
+
 void Voice::setGrainTriggerRate(float rate)
 {
   grainTriggerRate = sampleRate * (rate / 1000.0f);

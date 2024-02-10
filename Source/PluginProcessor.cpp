@@ -45,6 +45,8 @@ CaptureAudioProcessor::CaptureAudioProcessor()
     castParameter(apvts, ParameterID::interpolationTime, interpolationTimeParam);
     castParameter(apvts, ParameterID::delayInputGain, delayInputGainParam);
     castParameter(apvts, ParameterID::delayOutputGain, delayOutputGainParam);
+    castParameter(apvts, ParameterID::attack, attackParam);
+    castParameter(apvts, ParameterID::release, releaseParam);
 
     apvts.state.addListener(this);
 }
@@ -147,6 +149,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout CaptureAudioProcessor::creat
         "Output Gain",
         juce::NormalisableRange<float>(0.0f, 1.0f, 0.01f),
         0.01f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::attack,
+        "Attack",
+        juce::NormalisableRange<float>(0.1f, 10.0f, 0.01f),
+        0.01f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::release,
+        "Release",
+        juce::NormalisableRange<float>(0.1f, 10.0f, 0.01f),
+        0.01f));
+
     return layout;
 }
 
@@ -337,6 +352,8 @@ void CaptureAudioProcessor::update()
     synth.setInterpolationTime(interpolationTimeParam->get());
     synth.setDelayInputGain(delayInputGainParam->get());
     synth.setDelayOutputGain(delayOutputGainParam->get());
+    synth.setAttack(attackParam->get());
+    synth.setRelease(releaseParam->get());
 
     synth.playbackDir = static_cast<Synth::PlaybackDir>(playDirParam->getIndex());
     synth.grainDir = static_cast<Synth::PlaybackDir>(grainDirParam->getIndex());

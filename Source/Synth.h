@@ -23,6 +23,8 @@ public:
   void handleMidi(uint8_t data1, uint8_t data2, uint8_t data3);
   void handleMidiCc(uint8_t cc, uint8_t val);
 
+  void setAttack(float attack);
+  void setRelease(float release);
   void setPlayHead(float playHead_);
   void setGrainLength(float grainLength_);
   void setPlaySpeed(float playSpeed_);

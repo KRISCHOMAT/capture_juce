@@ -44,9 +44,11 @@ private:
     juce::Slider playDirKnob;
     juce::Slider delaytimeKnob;
     juce::Slider delayFeedbackKnob;
-    juce::Slider delayCharacterKnob;
+    juce::Slider delayLazynessKnob;
     juce::Slider delayInputGainKnob;
     juce::Slider delayOutputGainKnob;
+    juce::Slider attackKnob;
+    juce::Slider releaseKnob;
 
     // Labels
     juce::Label loopStartLabel;
@@ -58,6 +60,13 @@ private:
     juce::Label spreadLabel;
     juce::Label grainDirLabel;
     juce::Label playDirLabel;
+    juce::Label attackLabel;
+    juce::Label releaseLabel;
+    juce::Label dlTimeLabel;
+    juce::Label dlFeedbackLabel;
+    juce::Label dlLazynessLabel;
+    juce::Label dlInputLabel;
+    juce::Label dlOuputLabel;
 
     // Custom
     WaveViewer waveViewer;
@@ -110,10 +119,10 @@ private:
         audioProcessor.apvts,
         ParameterID::delayFeedback.getParamID(),
         delayFeedbackKnob};
-    SliderAttachment delayCharacterAttachment{
+    SliderAttachment delayLazynessAttachment{
         audioProcessor.apvts,
         ParameterID::interpolationTime.getParamID(),
-        delayCharacterKnob};
+        delayLazynessKnob};
     SliderAttachment delayInputGainAttachment{
         audioProcessor.apvts,
         ParameterID::delayInputGain.getParamID(),
@@ -122,6 +131,13 @@ private:
         audioProcessor.apvts,
         ParameterID::delayOutputGain.getParamID(),
         delayOutputGainKnob};
-
+    SliderAttachment attackAttachment{
+        audioProcessor.apvts,
+        ParameterID::attack.getParamID(),
+        attackKnob};
+    SliderAttachment releaseAttachment{
+        audioProcessor.apvts,
+        ParameterID::release.getParamID(),
+        releaseKnob};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CaptureAudioProcessorEditor)
 };

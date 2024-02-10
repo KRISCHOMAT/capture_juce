@@ -73,10 +73,10 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     delayFeedbackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
     addAndMakeVisible(delayFeedbackKnob);
 
-    delayCharacterKnob.setSliderStyle(
+    delayLazynessKnob.setSliderStyle(
         juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    delayCharacterKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
-    addAndMakeVisible(delayCharacterKnob);
+    delayLazynessKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayLazynessKnob);
 
     delayInputGainKnob.setSliderStyle(
         juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -87,6 +87,16 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
         juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     delayOutputGainKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
     addAndMakeVisible(delayOutputGainKnob);
+
+    releaseKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    releaseKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(releaseKnob);
+
+    attackKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    attackKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(attackKnob);
 
     // custom components
     addAndMakeVisible(waveViewer);
@@ -129,7 +139,34 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     playDirLabel.setText("Play-Dir", juce::NotificationType::dontSendNotification);
     playDirLabel.setJustificationType(juce::Justification::centred);
 
-    setSize(600, 550);
+    attackLabel.attachToComponent(&attackKnob, false);
+    attackLabel.setText("Attack", juce::NotificationType::dontSendNotification);
+    attackLabel.setJustificationType(juce::Justification::centred);
+
+    releaseLabel.attachToComponent(&releaseKnob, false);
+    releaseLabel.setText("Attack", juce::NotificationType::dontSendNotification);
+    releaseLabel.setJustificationType(juce::Justification::centred);
+
+    dlFeedbackLabel.attachToComponent(&delayFeedbackKnob, false);
+    dlFeedbackLabel.setText("Feedback", juce::NotificationType::dontSendNotification);
+    dlFeedbackLabel.setJustificationType(juce::Justification::centred);
+
+    dlTimeLabel.attachToComponent(&delaytimeKnob, false);
+    dlTimeLabel.setText("Feedback", juce::NotificationType::dontSendNotification);
+    dlTimeLabel.setJustificationType(juce::Justification::centred);
+
+    dlLazynessLabel.attachToComponent(&delayLazynessKnob, false);
+    dlLazynessLabel.setText("Lazyness", juce::NotificationType::dontSendNotification);
+    dlLazynessLabel.setJustificationType(juce::Justification::centred);
+
+    dlInputLabel.attachToComponent(&delayInputGainKnob, false);
+    dlInputLabel.setText("Input", juce::NotificationType::dontSendNotification);
+    dlInputLabel.setJustificationType(juce::Justification::centred);
+
+    dlOuputLabel.attachToComponent(&delayOutputGainKnob, false);
+    dlOuputLabel.setText("Output", juce::NotificationType::dontSendNotification);
+    dlOuputLabel.setJustificationType(juce::Justification::centred);
+    setSize(600, 850);
 }
 
 CaptureAudioProcessorEditor::~CaptureAudioProcessorEditor()
@@ -157,6 +194,7 @@ void CaptureAudioProcessorEditor::resized()
     levelMeter.setBounds(padding, padding / 2, 100, 50);
     waveViewer.setBounds(padding, padding + 50, getWidth() - (padding * 2), 100);
 
+    // grain row
     loopStartKnob.setBounds(padding, marginTop, knobWidth, knobHeight);
     loopLengthKnob.setBounds(padding + knobWidth * 1, marginTop, knobWidth, knobHeight);
     grainLengthKnob.setBounds(padding + knobWidth * 2, marginTop, knobWidth, knobHeight);
@@ -164,11 +202,17 @@ void CaptureAudioProcessorEditor::resized()
     playSpeedKnob.setBounds(padding + knobWidth * 4, marginTop, knobWidth, knobHeight);
     sprayKnob.setBounds(padding + knobWidth * 5, marginTop, knobWidth, knobHeight);
     spreadKnob.setBounds(padding + knobWidth * 6, marginTop, knobWidth, knobHeight);
+
+    // grainDir & Env
     grainDirKnob.setBounds(padding, marginTop + knobHeight + 50, knobWidth, knobHeight);
     playDirKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight + 50, knobWidth, knobHeight);
-    delayFeedbackKnob.setBounds(padding, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
-    delaytimeKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
-    delayCharacterKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
-    delayInputGainKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
-    delayOutputGainKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 2 + 50, knobWidth, knobHeight);
+    attackKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight + 50, knobWidth, knobHeight);
+    releaseKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight + 50, knobWidth, knobHeight);
+
+    // Delay Row
+    delayFeedbackKnob.setBounds(padding, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delaytimeKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delayLazynessKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delayInputGainKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+    delayOutputGainKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
 }

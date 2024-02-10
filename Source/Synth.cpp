@@ -18,6 +18,20 @@ void Synth::setPlayHead(float playHead)
     voices[voice].playHead = playHead;
   }
 }
+void Synth::setAttack(float attack)
+{
+  for (int voice = 0; voice < VOICE_NUM; voice++)
+  {
+    voices[voice].setAttack(attack);
+  }
+}
+void Synth::setRelease(float release)
+{
+  for (int voice = 0; voice < VOICE_NUM; voice++)
+  {
+    voices[voice].setRelease(release);
+  }
+}
 void Synth::setGrainLength(float grainLength)
 {
   for (int voice = 0; voice < VOICE_NUM; voice++)

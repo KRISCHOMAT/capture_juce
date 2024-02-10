@@ -21,6 +21,8 @@ class Voice
 {
 public:
   void setPlaySpeed(float playSpeed_);
+  void setAttack(float attack);
+  void setRelease(float release);
   void setGrainTriggerRate(float rate);
   void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer);
   void render(float **writePtrs, int numSamples);
