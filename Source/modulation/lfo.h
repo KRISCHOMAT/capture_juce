@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    modulation.h
-    Created: 30 Jan 2024 4:43:31pm
+    lfo.h
+    Created: 2 Mar 2024 7:17:19pm
     Author:  christiangrothe
 
   ==============================================================================
@@ -12,30 +12,28 @@
 #include <math.h>
 #include "../Utils.h"
 
-class Modulation
+class Lfo
 {
 public:
-  double modulationDepth;
   double inc;
   double phase;
 
-  void reset()
+  virtual void reset()
   {
     phase = 0.0;
-    sin0 = modulationDepth * std::sin(phase * Utils::TWO_PI);
-    sin1 = modulationDepth * std::sin((phase - inc) * Utils::TWO_PI);
+    sin0 = std::sin(phase * Utils::TWO_PI);
+    sin1 = std::sin((phase - inc) * Utils::TWO_PI);
     dsin = 2.0 * std::cos(inc * Utils::TWO_PI);
   }
 
-  float nextSample()
+  double nextSample()
   {
     double sinx = dsin * sin0 - sin1;
     sin1 = sin0;
     sin0 = sinx;
-    return sinx + 1;
+    return sinx;
   }
 
-private:
   double sin0;
   double sin1;
   double dsin;

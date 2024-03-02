@@ -128,7 +128,7 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 
   for (int sample = 0; sample < numSamples; sample++)
   {
-    Signal output;
+    Utils::Signal output;
 
     if (isRecording)
     {

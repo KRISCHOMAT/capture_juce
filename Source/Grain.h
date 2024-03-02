@@ -10,7 +10,7 @@
 
 #pragma once
 #include <math.h>
-#include "GrainEnv.h"
+#include "modulation/grainEnv.h"
 #include "AudioBuffer.h"
 #include "Utils.h"
 
@@ -23,13 +23,13 @@ public:
     sampleRate = sampleRate_;
   }
 
-  Signal getValues()
+  Utils::Signal getValues()
   {
-    Signal output;
+    Utils::Signal output;
     if (active)
     {
-      float envelope = grainEnv.nextValue();
-      phasor += phasorInc * pitch;
+      float envelope = grainEnv.nextSample();
+      phasor += phasorInc;
       if ((phasor >= 1.0f && !isReverse) || (phasor <= 0.0f && isReverse))
       {
         active = false;
@@ -47,17 +47,12 @@ public:
     return output;
   }
 
-  void setGrainLength(float grainLength_)
+  void setGrainLength(float grainLength_, float pitch_)
   {
     grainLength = sampleRate * (grainLength_ / 1000.0f);
-    grainEnv.init(grainLength);
-    phasorInc = 1 / grainLength;
-  }
-
-  void setPitch(float pitch_)
-  {
-    pitch = pitch_;
-    grainEnv.setPitch(pitch);
+    phasorInc = (1 / grainLength) * pitch_;
+    grainEnv.inc = phasorInc;
+    grainEnv.reset();
   }
 
   void activateGrain(float playHead, float grainLength, float pos_ = 0.0f, float pitch = 1.0f, bool isReverse_ = false)
@@ -67,16 +62,7 @@ public:
     offset = playHead;
     phasor = isReverse ? 1.0f : 0.0f;
     isReverse = isReverse_;
-
-    if (isReverse)
-    {
-      setPitch(-pitch);
-    }
-    else
-    {
-      setPitch(pitch);
-    }
-    setGrainLength(grainLength);
+    setGrainLength(grainLength, isReverse ? -pitch : pitch);
   }
 
   bool isActive()
@@ -111,7 +97,7 @@ private:
 
     float index = phasor * (grainLength - 1);
     index += sampleOffset;
-    auto sample = cubicHermiteSpline(loopBufferData, index, loopBufferLength);
+    auto sample = Utils::cubicHermiteSpline(loopBufferData, index, loopBufferLength);
 
     return sample;
   }

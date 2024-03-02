@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include "Utils.h"
 #include "Voice.h"
 #include "Envelope.h"
 #include "AudioBuffer.h"

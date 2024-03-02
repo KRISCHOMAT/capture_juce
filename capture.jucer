@@ -5,6 +5,10 @@
               companyWebsite="www.christian-grothe.com" pluginCharacteristicsValue="pluginWantsMidiIn">
   <MAINGROUP id="zI6ajl" name="Capture">
     <GROUP id="{6BFDDEF5-940A-7AB8-2795-7D9198F7C7D5}" name="Source">
+      <GROUP id="{07003B4B-182C-0292-2B9D-E2E6F734B121}" name="modulation">
+        <FILE id="kKqnCi" name="grainEnv.h" compile="0" resource="0" file="Source/modulation/grainEnv.h"/>
+        <FILE id="v10Pbp" name="lfo.h" compile="0" resource="0" file="Source/modulation/lfo.h"/>
+      </GROUP>
       <GROUP id="{68A12E75-9A22-2490-148B-D0785DDF109E}" name="effects">
         <FILE id="bHttyj" name="delay.h" compile="0" resource="0" file="Source/effects/delay.h"/>
         <FILE id="Mi5Sjp" name="modulation.h" compile="0" resource="0" file="Source/effects/modulation.h"/>
@@ -22,7 +26,6 @@
       <FILE id="NO7PFf" name="Voice.cpp" compile="1" resource="0" file="Source/Voice.cpp"/>
       <FILE id="jPtLjJ" name="Grain.h" compile="0" resource="0" file="Source/Grain.h"/>
       <FILE id="hd0upJ" name="Voice.h" compile="0" resource="0" file="Source/Voice.h"/>
-      <FILE id="Bp2OJP" name="GrainEnv.h" compile="0" resource="0" file="Source/GrainEnv.h"/>
       <FILE id="IaPVF4" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="aXpIHB" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

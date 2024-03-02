@@ -26,7 +26,7 @@ public:
   void setGrainTriggerRate(float rate);
   void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer);
   void render(float **writePtrs, int numSamples);
-  Signal render();
+  Utils::Signal render();
 
   void startPlaying(int note_);
   void stopPlaying();
@@ -72,6 +72,6 @@ private:
   float grainTriggerInc;  // counts from 0 to grainTriggerRate
 
   void activateGrain();
-  Signal getGrainVals();
+  Utils::Signal getGrainVals();
   void setPlayHead();
 };
