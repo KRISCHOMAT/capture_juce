@@ -26,6 +26,12 @@ public:
     dsin = 2.0 * std::cos(inc * Utils::TWO_PI);
   }
 
+  void setInc(double inc_)
+  {
+    inc = inc_;
+    reset();
+  }
+
   double nextSample()
   {
     double sinx = dsin * sin0 - sin1;

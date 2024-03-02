@@ -27,13 +27,14 @@ public:
 
   void init(int sampleRate_)
   {
-    modulationType = ModulationType::Square;
-    depth = 1.0f;
+    modulationType = ModulationType::Sine;
+    depth = 0.5f;
     sampleRate = sampleRate_;
     float inc = 1.0f / sampleRate;
     saw.setInc(inc);
     noise.setInc(inc);
     square.setInc(inc);
+    sine.setInc(inc);
   }
 
   void setFreq(float freq)
@@ -51,24 +52,26 @@ public:
 
   float nextSample()
   {
+    float nextSample = 0.0f;
     switch (modulationType)
     {
     case ModulationType::Sine:
-      return sine.nextSample();
+      return sine.nextSample() + 1.0f;
+      break;
 
     case ModulationType::Saw:
-      return saw.nextSample();
+      nextSample = saw.nextSample();
+      break;
 
     case ModulationType::Noise:
-      return noise.nextSample();
+      nextSample = noise.nextSample();
+      break;
 
     case ModulationType::Square:
-      return square.nextSample();
-
-    default:
-      return 0.0f;
+      nextSample = square.nextSample();
       break;
     }
+    return depth * nextSample + 1.0f;
   }
 
 private:
