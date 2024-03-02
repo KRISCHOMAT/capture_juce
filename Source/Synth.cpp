@@ -207,6 +207,7 @@ void Synth::handleMidi(uint8_t data1, uint8_t data2, uint8_t data3)
 
   case MidiCommands::CC:
     handleMidiCc(data2, data3);
+    // DBG(data2 << " " << data3);
     break;
 
   default:
@@ -220,7 +221,7 @@ void Synth::handleMidiCc(uint8_t cc, uint8_t val)
   switch (cc)
   {
   case MidiCommands::startRecording:
-    if (val > 0)
+    if (val > 50)
     {
       isRecording = true;
     }

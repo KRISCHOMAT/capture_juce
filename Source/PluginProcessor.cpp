@@ -310,6 +310,23 @@ void CaptureAudioProcessor::handleMidi(juce::MidiBuffer &midiMessages)
         data2 = metadata.data[1];
         data3 = metadata.data[2];
         synth.handleMidi(data1, data2, data3);
+
+        float val = data3 / 127.0f;
+
+        switch (data2)
+        {
+        case 23:
+            loopStartParam->setValueNotifyingHost(val);
+            break;
+        case 24:
+            loopLengthParam->setValueNotifyingHost(val);
+            break;
+        case 25:
+            grainLengthParam->setValueNotifyingHost(val);
+            break;
+        default:
+            break;
+        }
     }
 }
 
