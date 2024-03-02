@@ -14,6 +14,7 @@
 #include "Envelope.h"
 #include "AudioBuffer.h"
 #include "effects/delay.h"
+#include "modulation/modulator.h"
 
 class Synth
 {
@@ -71,6 +72,7 @@ public:
 
 private:
   SynthState state{SynthState::Stop};
+  Modulator modA;
 
   static constexpr int VOICE_NUM = 32;
   Voice voices[VOICE_NUM];

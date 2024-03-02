@@ -9,9 +9,9 @@
 */
 
 #pragma once
-#include "lfo.h"
+#include "sine.h"
 
-class GrainEnv : public Lfo
+class GrainEnv : public Sine
 {
 public:
   void reset() override

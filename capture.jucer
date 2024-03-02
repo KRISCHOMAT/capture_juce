@@ -6,8 +6,12 @@
   <MAINGROUP id="zI6ajl" name="Capture">
     <GROUP id="{6BFDDEF5-940A-7AB8-2795-7D9198F7C7D5}" name="Source">
       <GROUP id="{07003B4B-182C-0292-2B9D-E2E6F734B121}" name="modulation">
+        <FILE id="csH50X" name="square.h" compile="0" resource="0" file="Source/modulation/square.h"/>
         <FILE id="kKqnCi" name="grainEnv.h" compile="0" resource="0" file="Source/modulation/grainEnv.h"/>
-        <FILE id="v10Pbp" name="lfo.h" compile="0" resource="0" file="Source/modulation/lfo.h"/>
+        <FILE id="v10Pbp" name="sine.h" compile="0" resource="0" file="Source/modulation/sine.h"/>
+        <FILE id="sapEme" name="modulator.h" compile="0" resource="0" file="Source/modulation/modulator.h"/>
+        <FILE id="O8X72E" name="noise.h" compile="0" resource="0" file="Source/modulation/noise.h"/>
+        <FILE id="gMIfnp" name="saw.h" compile="0" resource="0" file="Source/modulation/saw.h"/>
       </GROUP>
       <GROUP id="{68A12E75-9A22-2490-148B-D0785DDF109E}" name="effects">
         <FILE id="bHttyj" name="delay.h" compile="0" resource="0" file="Source/effects/delay.h"/>

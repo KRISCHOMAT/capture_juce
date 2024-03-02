@@ -128,6 +128,8 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 
   for (int sample = 0; sample < numSamples; sample++)
   {
+    float mod = modA.nextSample();
+    DBG(mod);
     Utils::Signal output;
 
     if (isRecording)
@@ -165,6 +167,7 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 {
   loopBuffer.setSize(bufferSize);
   delay.setSize(sampleRate_ * 1, sampleRate_);
+  modA.init(sampleRate_);
   writePos = 0.0f;
   isRecording = false;
   playbackDir = PlaybackDir::Normal;

@@ -12,7 +12,7 @@
 #include <math.h>
 #include "../Utils.h"
 
-class Lfo
+class Sine
 {
 public:
   double inc;
