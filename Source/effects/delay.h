@@ -37,13 +37,13 @@ public:
     mod.reset();
   }
 
-  Signal render(Signal input)
+  Utils::Signal render(Utils::Signal input)
   {
     write(input);
     return nextSample();
   }
 
-  void write(Signal input)
+  void write(Utils::Signal input)
   {
 
     bufferL[writePos] = (input.left * inputGain) + (bufferL[readPos] * feedback);
@@ -55,16 +55,16 @@ public:
     }
   }
 
-  Signal nextSample()
+  Utils::Signal nextSample()
   {
-    Signal output;
+    Utils::Signal output;
 
     float modVal = mod.nextSample();
     float targetDelayMod = fmod(targetDelaytime * modVal, 1.0f);
 
     if (delaytime != targetDelayMod)
     {
-      delaytime = lerp(delaytime, targetDelayMod, interpolationTime);
+      delaytime = Utils::lerp(delaytime, targetDelayMod, interpolationTime);
     }
 
     int offset = bufferSize * delaytime;
@@ -75,8 +75,8 @@ public:
       readPos += bufferSize;
     }
 
-    float sampleL = cubicHermiteSpline(bufferL.data(), static_cast<float>(readPos), bufferSize);
-    float sampleR = cubicHermiteSpline(bufferR.data(), static_cast<float>(readPos), bufferSize);
+    float sampleL = Utils::cubicHermiteSpline(bufferL.data(), static_cast<float>(readPos), bufferSize);
+    float sampleR = Utils::cubicHermiteSpline(bufferR.data(), static_cast<float>(readPos), bufferSize);
 
     output.left = sampleL;
     output.right = sampleR;

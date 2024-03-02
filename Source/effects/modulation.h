@@ -23,9 +23,9 @@ public:
   void reset()
   {
     phase = 0.0f;
-    sin0 = modulationDepth * std::sin(phase * TWO_PI);
-    sin1 = modulationDepth * std::sin((phase - inc) * TWO_PI);
-    dsin = 2.0f * std::cos(inc * TWO_PI);
+    sin0 = modulationDepth * std::sin(phase * Utils::TWO_PI);
+    sin1 = modulationDepth * std::sin((phase - inc) * Utils::TWO_PI);
+    dsin = 2.0f * std::cos(inc * Utils::TWO_PI);
   }
 
   float nextSample()
