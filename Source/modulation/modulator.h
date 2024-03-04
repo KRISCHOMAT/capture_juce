@@ -55,7 +55,7 @@ public:
     switch (modulationType)
     {
     case ModulationType::Sine:
-      nextSample = sine.nextSample() + 1.0f;
+      nextSample = (sine.nextSample() + 1.0f) * 0.5f;
       break;
 
     case ModulationType::Saw:

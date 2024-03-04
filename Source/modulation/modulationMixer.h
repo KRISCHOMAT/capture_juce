@@ -20,9 +20,9 @@ public:
     for (int mod = 0; mod < MOD_NUM; mod++)
     {
       mods[mod].init(sampleRate_);
-      for (int mix = 0; mix > MIX_NUM; mix++)
+      for (int mix = 0; mix < MIX_NUM; mix++)
       {
-        setMixDepth(mix, mod, 0.2f);
+        setMixDepth(mix, mod, 0.0f);
       }
     }
     mods[0].setModulationType(Modulator::ModulationType::Noise);
@@ -30,10 +30,14 @@ public:
     mods[2].setModulationType(Modulator::ModulationType::Square);
     mods[3].setModulationType(Modulator::ModulationType::Sine);
 
-    mods[0].setFreq(1.0f);
-    mods[1].setFreq(2.0f);
-    mods[2].setFreq(3.0f);
-    mods[3].setFreq(4.0f);
+    mods[0].setFreq(8.0f);
+    mods[1].setFreq(0.25f);
+    mods[2].setFreq(1.0f);
+    mods[3].setFreq(1.0f);
+    setMixDepth(0, 0, 0.0f);
+    setMixDepth(0, 1, 0.0f);
+    setMixDepth(0, 2, 0.0f);
+    setMixDepth(0, 3, 1.0f);
   }
 
   void update()
@@ -44,17 +48,14 @@ public:
     }
   }
 
-  float gutCurrentSample(uint8_t index, float depth)
+  float gutCurrentSample(uint8_t mixIndex, float depth)
   {
     float sample = 0.0f;
     for (int i = 0; i < MOD_NUM; i++)
     {
-      for (int y = 0; y < MIX_NUM; y++)
-      {
-
-        sample += (mods[i].currentSample * mixes[i][y]);
-      }
+      sample += mods[i].currentSample * mixes[mixIndex][i];
     }
+    DBG(sample);
     return (sample * depth) + 1.0f;
   }
 

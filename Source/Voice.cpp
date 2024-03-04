@@ -106,7 +106,6 @@ void Voice::render(float **writePtrs, int numSamples)
 
 Utils::Signal Voice::render()
 {
-  // applyModulation();
   setPlayHead();
   activateGrain();
   Utils::Signal voiceOut = getGrainVals();
@@ -139,7 +138,7 @@ inline void Voice::setPlayHead()
 void Voice::activateGrain()
 {
   float triggerRateWithMod = grainTriggerRate * modMixer->gutCurrentSample(0, 15.0f);
-  float grainLengthWithMod = grainLength * modMixer->gutCurrentSample(1, 15.0f);
+  // float grainLengthWithMod = grainLength * modMixer->gutCurrentSample(1, 15.0f);
 
   if (grainTriggerInc++ >= triggerRateWithMod)
   {
@@ -152,7 +151,7 @@ void Voice::activateGrain()
         float withSpray = (playHead + spray > 1.0f) ? playHead : playHead + spray;
         float pos = (random.nextFloat() - 0.5f) * 2 * spreadFactor;
         bool isReverse = synth->grainDir == Synth::PlaybackDir::Normal ? false : true;
-        grains[grain].activateGrain(withSpray, grainLengthWithMod, pos, pitch, isReverse);
+        grains[grain].activateGrain(withSpray, grainLength, pos, pitch, isReverse);
         break;
       }
     }
