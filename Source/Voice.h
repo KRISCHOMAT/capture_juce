@@ -9,10 +9,10 @@
 */
 
 #pragma once
-#include <JuceHeader.h>
 #include "Grain.h"
 #include "Envelope.h"
 #include "Utils.h"
+#include "modulation/modulationMixer.h"
 
 class Synth;
 class AudioBuffer;
@@ -24,7 +24,7 @@ public:
   void setAttack(float attack);
   void setRelease(float release);
   void setGrainTriggerRate(float rate);
-  void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer);
+  void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer, ModulationMixer *mods);
   void render(float **writePtrs, int numSamples);
   Utils::Signal render();
 
@@ -67,6 +67,9 @@ private:
   float loopBufferSize;
   bool isPlaying;
   float pitch;
+  float grainTriggerModDepth{3};
+  float grainLengthModDepth{3};
+  ModulationMixer *modMixer;
 
   float grainTriggerRate; // amount of triggers per second
   float grainTriggerInc;  // counts from 0 to grainTriggerRate

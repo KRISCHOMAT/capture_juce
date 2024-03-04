@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+#include <JuceHeader.h>
 #include "Voice.h"
 #include "Synth.h"
 #include "AudioBuffer.h"
@@ -54,11 +55,13 @@ bool Voice::getIsPlaying()
   return isPlaying;
 }
 
-void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth_, AudioBuffer *loopBuffer)
+void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth_, AudioBuffer *loopBuffer, ModulationMixer *modMixer_)
 {
   synth = synth_;
   loopBufferPtr = loopBuffer;
   loopBufferSize = bufferSize;
+
+  modMixer = modMixer_;
 
   sampleRate = sampleRate_;
   grainTriggerRate = sampleRate * (500.f / 1000.0f);
@@ -103,6 +106,7 @@ void Voice::render(float **writePtrs, int numSamples)
 
 Utils::Signal Voice::render()
 {
+  // applyModulation();
   setPlayHead();
   activateGrain();
   Utils::Signal voiceOut = getGrainVals();
@@ -134,8 +138,10 @@ inline void Voice::setPlayHead()
 
 void Voice::activateGrain()
 {
+  float triggerRateWithMod = grainTriggerRate * modMixer->gutCurrentSample(0, 15.0f);
+  float grainLengthWithMod = grainLength * modMixer->gutCurrentSample(1, 15.0f);
 
-  if (grainTriggerInc++ >= grainTriggerRate)
+  if (grainTriggerInc++ >= triggerRateWithMod)
   {
     float spray = random.nextFloat() * sprayFactor;
     for (int grain = 0; grain < GRAIN_NUMS; grain++)
@@ -146,7 +152,7 @@ void Voice::activateGrain()
         float withSpray = (playHead + spray > 1.0f) ? playHead : playHead + spray;
         float pos = (random.nextFloat() - 0.5f) * 2 * spreadFactor;
         bool isReverse = synth->grainDir == Synth::PlaybackDir::Normal ? false : true;
-        grains[grain].activateGrain(withSpray, grainLength, pos, pitch, isReverse);
+        grains[grain].activateGrain(withSpray, grainLengthWithMod, pos, pitch, isReverse);
         break;
       }
     }

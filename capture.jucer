@@ -6,6 +6,8 @@
   <MAINGROUP id="zI6ajl" name="Capture">
     <GROUP id="{6BFDDEF5-940A-7AB8-2795-7D9198F7C7D5}" name="Source">
       <GROUP id="{07003B4B-182C-0292-2B9D-E2E6F734B121}" name="modulation">
+        <FILE id="kFamot" name="modulationMixer.h" compile="0" resource="0"
+              file="Source/modulation/modulationMixer.h"/>
         <FILE id="csH50X" name="square.h" compile="0" resource="0" file="Source/modulation/square.h"/>
         <FILE id="kKqnCi" name="grainEnv.h" compile="0" resource="0" file="Source/modulation/grainEnv.h"/>
         <FILE id="v10Pbp" name="sine.h" compile="0" resource="0" file="Source/modulation/sine.h"/>

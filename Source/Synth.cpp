@@ -128,8 +128,10 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
 
   for (int sample = 0; sample < numSamples; sample++)
   {
-    float mod = modA.nextSample();
-    DBG(mod);
+    modMixer.update();
+
+    // DBG(mods[0].getCurrentSample(1.0f) << " " << mods[1].getCurrentSample(10.0f) << " " << mods[2].getCurrentSample(1.0f));
+
     Utils::Signal output;
 
     if (isRecording)
@@ -167,7 +169,6 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 {
   loopBuffer.setSize(bufferSize);
   delay.setSize(sampleRate_ * 1, sampleRate_);
-  modA.init(sampleRate_);
   writePos = 0.0f;
   isRecording = false;
   playbackDir = PlaybackDir::Normal;
@@ -175,8 +176,10 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 
   for (int voice = 0; voice < VOICE_NUM; voice++)
   {
-    voices[voice].init(totalChannelNum, bufferSize, sampleRate_, this, &loopBuffer);
+    voices[voice].init(totalChannelNum, bufferSize, sampleRate_, this, &loopBuffer, &modMixer);
   }
+
+  modMixer.init(sampleRate_);
 }
 
 void Synth::handleMidi(uint8_t data1, uint8_t data2, uint8_t data3)
