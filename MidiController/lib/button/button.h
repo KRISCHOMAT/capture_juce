@@ -1,5 +1,4 @@
-#ifndef Button_H
-#define Button_H
+#pragma once
 
 class Button
 {
@@ -12,5 +11,3 @@ private:
     uint8_t cc;
     boolean active;
 };
-
-#endif

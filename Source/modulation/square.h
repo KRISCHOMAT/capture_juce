@@ -36,6 +36,6 @@ public:
 
 private:
   float phase{0.0f};
-  float duty{0.5};
+  float duty{0.5f};
   float inc;
 };

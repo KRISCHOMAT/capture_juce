@@ -69,14 +69,24 @@ public:
   PlaybackDir playbackDir;
   AudioBuffer loopBuffer;
   Delay delay;
+  ModulationMixer modMixer;
+
+  float grainLengthModDepth;
+  float grainDensModDepth;
+  float playSpeedModDepth;
+  float delayTimeModDepth;
+  float delayLazynessModDepth;
+  float delayInputModDepth;
+
+  uint8_t grainDensModIndex{0};
+  uint8_t grainLengthModIndex{1};
+  uint8_t playSpeedModIndex{2};
+  uint8_t delayTimeModIndex{3};
+  uint8_t delayLazynessModIndex{1};
+  uint8_t delayInputModIndex{2};
 
 private:
   SynthState state{SynthState::Stop};
-
-  // static constexpr int MOD_NUM = 3;
-  // Modulator mods[MOD_NUM];
-
-  ModulationMixer modMixer;
 
   static constexpr int VOICE_NUM = 32;
   Voice voices[VOICE_NUM];

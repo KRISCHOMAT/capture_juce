@@ -1,5 +1,4 @@
-#ifndef Pot_H
-#define Pot_h
+#pragma once
 
 struct Reading
 {
@@ -22,5 +21,3 @@ private:
     uint8_t filteredReading{0};
     uint8_t previous{0};
 };
-
-#endif

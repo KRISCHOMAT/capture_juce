@@ -55,14 +55,10 @@ bool Voice::getIsPlaying()
   return isPlaying;
 }
 
-void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth_, AudioBuffer *loopBuffer, ModulationMixer *modMixer_)
+void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth_)
 {
   synth = synth_;
-  loopBufferPtr = loopBuffer;
   loopBufferSize = bufferSize;
-
-  modMixer = modMixer_;
-
   sampleRate = sampleRate_;
   grainTriggerRate = sampleRate * (500.f / 1000.0f);
   grainTriggerInc = grainTriggerRate;
@@ -88,7 +84,7 @@ void Voice::init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *
 
   for (int grain = 0; grain < GRAIN_NUMS; grain++)
   {
-    grains[grain].init(loopBufferPtr, sampleRate);
+    grains[grain].init(&synth->loopBuffer, sampleRate);
   }
 }
 
@@ -118,27 +114,27 @@ inline void Voice::setPlayHead()
   switch (synth->playbackDir)
   {
   case Synth::PlaybackDir::Normal:
-    playHead = (playHead >= 1.0f) | (playHead >= loopStart + loopLength) ? loopStart : playHead + playHeadInc;
+    playHead = (playHead >= 1.0f) | (playHead >= loopStart + loopLength)
+                   ? loopStart
+                   : playHead + (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModDepth, synth->playSpeedModIndex));
     break;
 
   case Synth::PlaybackDir::Reverse:
-    playHead = playHead <= loopStart ? loopStart + loopLength : playHead - playHeadInc;
+    playHead = playHead <= loopStart
+                   ? loopStart + loopLength
+                   : playHead - (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModDepth, synth->playSpeedModIndex));
     break;
 
   case Synth::PlaybackDir::BackAndForth:
     // TO DO
-    break;
-
-  default:
-    playHead = playHead >= 1.0f ? 0.0f : playHead + playHeadInc;
     break;
   }
 }
 
 void Voice::activateGrain()
 {
-  float triggerRateWithMod = grainTriggerRate * modMixer->gutCurrentSample(0, 15.0f);
-  // float grainLengthWithMod = grainLength * modMixer->gutCurrentSample(1, 15.0f);
+  float triggerRateWithMod = grainTriggerRate * synth->modMixer.getCurrentSample(synth->grainDensModIndex, synth->grainDensModDepth);
+  float grainLengthWithMod = grainLength * synth->modMixer.getCurrentSample(synth->grainLengthModIndex, synth->grainLengthModDepth);
 
   if (grainTriggerInc++ >= triggerRateWithMod)
   {

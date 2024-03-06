@@ -13,10 +13,16 @@
 #include <cmath>
 #include "modulation.h"
 #include "../Utils.h"
+#include "../Synth.h"
 
 class Delay
 {
 public:
+  void init(Synth *synth_)
+  {
+    synth = synth_;
+  }
+
   void setModulationDepth(float modulationDepth)
   {
     mod.modulationDepth = modulationDepth;
@@ -119,6 +125,8 @@ private:
   float interpolationTime{0.001f};
   int bufferSize;
   float sampleRate;
+
+  Synth *synth;
 
   Modulation mod;
 

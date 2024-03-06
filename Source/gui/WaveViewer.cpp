@@ -13,7 +13,7 @@
 #include "../PluginEditor.h"
 
 //==============================================================================
-WaveViewer::WaveViewer(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_) : buffer(buffer_), editor(editor_)
+WaveViewer::WaveViewer(CaptureAudioProcessorEditor &editor_) : editor(editor_)
 {
   // In your constructor, you should add any child components, and
   // initialise any special settings that your component needs.
@@ -26,14 +26,16 @@ WaveViewer::~WaveViewer()
 
 void WaveViewer::paint(juce::Graphics &g)
 {
+  Synth &synth = editor.audioProcessor.synth;
+  float lfo = synth.modMixer.getCurrentSample(0, 1.0f);
   // Clear the background
-  g.fillAll(juce::Colour::fromRGB(32, 62, 88));
+  g.fillAll(juce::Colour::fromRGB(255.0f * lfo, 255.0f, 255.0f));
 
   int height = getHeight();
   int width = getWidth();
   int scale = 5;
-  int numSamples = buffer.getNumSamples();
-  auto readPtr = buffer.getReadPtr();
+  int numSamples = synth.loopBuffer.getNumSamples();
+  auto readPtr = synth.loopBuffer.getReadPtr();
 
   g.setColour(juce::Colours::white);
 

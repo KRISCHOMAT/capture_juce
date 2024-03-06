@@ -48,7 +48,7 @@ public:
     }
   }
 
-  float gutCurrentSample(uint8_t mixIndex, float depth)
+  float getCurrentSample(uint8_t mixIndex, float depth)
   {
     float sample = 0.0f;
     for (int i = 0; i < MOD_NUM; i++)

@@ -1,5 +1,4 @@
-#ifndef Keyboard_H
-#define Keyboard_H
+#pragma once
 
 class Keyboard
 {
@@ -29,5 +28,3 @@ private:
     int debounceDelay;
     KeyboardState keyboardState;
 };
-
-#endif

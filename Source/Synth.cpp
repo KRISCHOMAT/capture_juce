@@ -130,8 +130,6 @@ void Synth::render(const float *readPtr, float **writePtrs, int numSamples)
   {
     modMixer.update();
 
-    // DBG(mods[0].getCurrentSample(1.0f) << " " << mods[1].getCurrentSample(10.0f) << " " << mods[2].getCurrentSample(1.0f));
-
     Utils::Signal output;
 
     if (isRecording)
@@ -176,10 +174,11 @@ void Synth::init(int totalChannelNum, int bufferSize, float sampleRate_)
 
   for (int voice = 0; voice < VOICE_NUM; voice++)
   {
-    voices[voice].init(totalChannelNum, bufferSize, sampleRate_, this, &loopBuffer, &modMixer);
+    voices[voice].init(totalChannelNum, bufferSize, sampleRate_, this);
   }
 
   modMixer.init(sampleRate_);
+  delay.init(this);
 }
 
 void Synth::handleMidi(uint8_t data1, uint8_t data2, uint8_t data3)

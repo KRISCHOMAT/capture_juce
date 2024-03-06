@@ -21,7 +21,7 @@ class AudioBuffer;
 class WaveViewer : public juce::Component, public juce::Timer
 {
 public:
-  WaveViewer(AudioBuffer &buffer_, CaptureAudioProcessorEditor &editor_);
+  WaveViewer(CaptureAudioProcessorEditor &editor_);
 
   ~WaveViewer() override;
 
@@ -29,7 +29,6 @@ public:
   void resized() override;
 
 private:
-  AudioBuffer &buffer;
   CaptureAudioProcessorEditor &editor;
 
   void timerCallback() override;

@@ -24,7 +24,7 @@ public:
   void setAttack(float attack);
   void setRelease(float release);
   void setGrainTriggerRate(float rate);
-  void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth, AudioBuffer *loopBuffer, ModulationMixer *mods);
+  void init(int totalChannelNum, int bufferSize, float sampleRate_, Synth *synth);
   void render(float **writePtrs, int numSamples);
   Utils::Signal render();
 
@@ -57,7 +57,6 @@ private:
 
   Envelope env;
 
-  AudioBuffer *loopBufferPtr;
   juce::Random random;
 
   int writePos;
@@ -69,7 +68,6 @@ private:
   float pitch;
   float grainTriggerModDepth{3};
   float grainLengthModDepth{3};
-  ModulationMixer *modMixer;
 
   float grainTriggerRate; // amount of triggers per second
   float grainTriggerInc;  // counts from 0 to grainTriggerRate
