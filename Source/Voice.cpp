@@ -116,13 +116,13 @@ inline void Voice::setPlayHead()
   case Synth::PlaybackDir::Normal:
     playHead = (playHead >= 1.0f) | (playHead >= loopStart + loopLength)
                    ? loopStart
-                   : playHead + (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModDepth, synth->playSpeedModIndex));
+                   : playHead + (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModIndex, synth->playSpeedModDepth));
     break;
 
   case Synth::PlaybackDir::Reverse:
     playHead = playHead <= loopStart
                    ? loopStart + loopLength
-                   : playHead - (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModDepth, synth->playSpeedModIndex));
+                   : playHead - (playHeadInc * synth->modMixer.getCurrentSample(synth->playSpeedModIndex, synth->playSpeedModDepth));
     break;
 
   case Synth::PlaybackDir::BackAndForth:
@@ -133,7 +133,7 @@ inline void Voice::setPlayHead()
 
 void Voice::activateGrain()
 {
-  float triggerRateWithMod = grainTriggerRate * synth->modMixer.getCurrentSample(synth->grainDensModIndex, synth->grainDensModDepth);
+  float triggerRateWithMod = grainTriggerRate * synth->modMixer.getCurrentSample(synth->grainDenseModIndex, synth->grainDenseModDepth);
   float grainLengthWithMod = grainLength * synth->modMixer.getCurrentSample(synth->grainLengthModIndex, synth->grainLengthModDepth);
 
   if (grainTriggerInc++ >= triggerRateWithMod)
@@ -147,7 +147,7 @@ void Voice::activateGrain()
         float withSpray = (playHead + spray > 1.0f) ? playHead : playHead + spray;
         float pos = (random.nextFloat() - 0.5f) * 2 * spreadFactor;
         bool isReverse = synth->grainDir == Synth::PlaybackDir::Normal ? false : true;
-        grains[grain].activateGrain(withSpray, grainLength, pos, pitch, isReverse);
+        grains[grain].activateGrain(withSpray, grainLengthWithMod, pos, pitch, isReverse);
         break;
       }
     }

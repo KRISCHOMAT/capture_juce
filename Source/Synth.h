@@ -40,8 +40,6 @@ public:
   void setInterpolationTime(float character);
   void setDelayInputGain(float inputGain);
   void setDelayOutputGain(float outputGain);
-  void setDelayModDepth(float modDepth);
-  void setDelayModSpeed(float modSpeed);
 
   enum MidiCommands
   {
@@ -71,19 +69,26 @@ public:
   Delay delay;
   ModulationMixer modMixer;
 
-  float grainLengthModDepth;
-  float grainDensModDepth;
-  float playSpeedModDepth;
-  float delayTimeModDepth;
-  float delayLazynessModDepth;
-  float delayInputModDepth;
+  // Modulation
+  float grainLengthModDepth{0.0f};
+  float grainDenseModDepth{0.0f};
+  float playSpeedModDepth{0.0f};
+  float delayTimeModDepth{0.0f};
+  float delayLazynessModDepth{0.0f};
+  float delayInputModDepth{0.0f};
 
-  uint8_t grainDensModIndex{0};
+  uint8_t grainDenseModIndex{0};
   uint8_t grainLengthModIndex{1};
   uint8_t playSpeedModIndex{2};
   uint8_t delayTimeModIndex{3};
   uint8_t delayLazynessModIndex{1};
   uint8_t delayInputModIndex{2};
+
+  void setModulation(float &depthDestiny, float newDepth, uint8_t &indexDestinty, uint8_t newIndex);
+  void setModulation(float &depthDestiny, float newDepth);
+  void setModulation(uint8_t &indexDestinty, uint8_t newIndex);
+  void setModulationType(uint8_t index, Modulator::ModulationType newType);
+  void setModulationFreq(uint8_t index, float newFreq);
 
 private:
   SynthState state{SynthState::Stop};

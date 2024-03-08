@@ -27,9 +27,8 @@ WaveViewer::~WaveViewer()
 void WaveViewer::paint(juce::Graphics &g)
 {
   Synth &synth = editor.audioProcessor.synth;
-  float lfo = synth.modMixer.getCurrentSample(0, 1.0f);
   // Clear the background
-  g.fillAll(juce::Colour::fromRGB(255.0f * lfo, 255.0f, 255.0f));
+  g.fillAll(juce::Colour::fromRGB(8, 41, 67));
 
   int height = getHeight();
   int width = getWidth();

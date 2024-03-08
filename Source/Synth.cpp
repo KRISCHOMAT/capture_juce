@@ -11,6 +11,7 @@
 #include "Synth.h"
 #include <cstdint>
 
+// Parameter Setters
 void Synth::setPlayHead(float playHead)
 {
   for (int voice = 0; voice < VOICE_NUM; voice++)
@@ -110,14 +111,27 @@ void Synth::setDelayOutputGain(float outputGain)
   delay.setOutputGain(outputGain);
 }
 
-void Synth::setDelayModDepth(float depth)
+// Modulation Setters
+void Synth::setModulation(float &depthDestiny, float newDepth, uint8_t &indexDestinty, uint8_t newIndex)
 {
-  delay.setModulationDepth(depth);
+  depthDestiny = newDepth;
+  indexDestinty = newIndex;
 }
-
-void Synth::setDelayModSpeed(float speed)
+void Synth::setModulation(float &depthDestiny, float newDepth)
 {
-  delay.setModulationSpeed(speed);
+  depthDestiny = newDepth;
+}
+void Synth::setModulation(uint8_t &indexDestinty, uint8_t newIndex)
+{
+  indexDestinty = newIndex;
+}
+void Synth::setModulationType(uint8_t index, Modulator::ModulationType newType)
+{
+  modMixer.mods[index].setModulationType(newType);
+}
+void Synth::setModulationFreq(uint8_t index, float newFreq)
+{
+  modMixer.mods[index].setFreq(newFreq);
 }
 
 void Synth::render(const float *readPtr, float **writePtrs, int numSamples)

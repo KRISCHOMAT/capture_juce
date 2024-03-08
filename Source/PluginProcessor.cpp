@@ -49,6 +49,19 @@ CaptureAudioProcessor::CaptureAudioProcessor()
     castParameter(apvts, ParameterID::release, releaseParam);
     castParameter(apvts, ParameterID::delayModSpeed, delayModSpeedParam);
     castParameter(apvts, ParameterID::delayModDepth, delayModDepthParam);
+    castParameter(apvts, ParameterID::grainLengthModDepth, grainLengthModDepthParam);
+    castParameter(apvts, ParameterID::grainDenseModDepth, grainDenseModDepthParam);
+    castParameter(apvts, ParameterID::playSpeedModDepth, playSpeedModDepthParam);
+    castParameter(apvts, ParameterID::delayTimeModDepth, delayTimeModDepthParam);
+    castParameter(apvts, ParameterID::delayLazynessModDepth, delayLazynessModDepthParam);
+    castParameter(apvts, ParameterID::delayInputModDepth, delayInputModDepthParam);
+    castParameter(apvts, ParameterID::grainLengthModIndex, grainLengthModIndexParam);
+    castParameter(apvts, ParameterID::grainDenseModIndex, grainDenseModIndexParam);
+    castParameter(apvts, ParameterID::playSpeedModIndex, playSpeedModIndexParam);
+    castParameter(apvts, ParameterID::delayTimeModIndex, delayTimeModIndexParam);
+    castParameter(apvts, ParameterID::delayLazynessModIndex, delayLazynessModIndexParam);
+    castParameter(apvts, ParameterID::delayInputModIndex, delayInputModIndexParam);
+
     apvts.state.addListener(this);
 }
 
@@ -175,6 +188,74 @@ juce::AudioProcessorValueTreeState::ParameterLayout CaptureAudioProcessor::creat
         juce::NormalisableRange<float>(0.01f, 20.0f, 0.01f),
         0.01f));
 
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::grainLengthModDepth,
+        "GrainLength",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::grainDenseModDepth,
+        "GrainDense",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::playSpeedModDepth,
+        "playSpeed",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayTimeModDepth,
+        "dlTime",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayLazynessModDepth,
+        "dlLazy",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayInputModDepth,
+        "dlIn",
+        juce::NormalisableRange<float>(0.0f, 10.0f, 0.01f),
+        0.0f));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::grainLengthModIndex,
+        "grainLength",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::grainDenseModIndex,
+        "grainDense",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::playSpeedModIndex,
+        "grainDense",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayTimeModIndex,
+        "grainDense",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayLazynessModIndex,
+        "grainDense",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(
+        ParameterID::delayInputModIndex,
+        "grainDense",
+        juce::NormalisableRange<float>(0, 3, 1),
+        0));
     return layout;
 }
 
@@ -384,8 +465,21 @@ void CaptureAudioProcessor::update()
     synth.setDelayOutputGain(delayOutputGainParam->get());
     synth.setAttack(attackParam->get());
     synth.setRelease(releaseParam->get());
-    synth.setDelayModDepth(delayModDepthParam->get());
-    synth.setDelayModSpeed(delayModSpeedParam->get());
+
+    // modulation
+    synth.grainDenseModDepth = grainDenseModDepthParam->get();
+    synth.grainLengthModDepth = grainLengthModDepthParam->get();
+    synth.playSpeedModDepth = playSpeedModDepthParam->get();
+    synth.delayTimeModDepth = delayTimeModDepthParam->get();
+    synth.delayLazynessModDepth = delayLazynessModDepthParam->get();
+    synth.delayInputModDepth = delayInputModDepthParam->get();
+
+    synth.grainLengthModIndex = grainLengthModIndexParam->get();
+    synth.grainDenseModIndex = grainDenseModDepthParam->get();
+    synth.playSpeedModIndex = playSpeedModIndexParam->get();
+    synth.delayTimeModIndex = delayTimeModIndexParam->get();
+    synth.delayLazynessModIndex = delayLazynessModIndexParam->get();
+    synth.delayInputModIndex = delayInputModIndexParam->get();
 
     synth.playbackDir = static_cast<Synth::PlaybackDir>(playDirParam->getIndex());
     synth.grainDir = static_cast<Synth::PlaybackDir>(grainDirParam->getIndex());

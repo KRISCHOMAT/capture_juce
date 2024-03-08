@@ -11,7 +11,6 @@
 #pragma once
 #include <vector>
 #include <cmath>
-#include "modulation.h"
 #include "../Utils.h"
 #include "../Synth.h"
 
@@ -23,24 +22,12 @@ public:
     synth = synth_;
   }
 
-  void setModulationDepth(float modulationDepth)
-  {
-    mod.modulationDepth = modulationDepth;
-  }
-  void setModulationSpeed(float modulationSpeed)
-  {
-    mod.inc = modulationSpeed / sampleRate;
-    mod.reset();
-  }
   void setSize(int bufferSize_, float sampleRate_)
   {
     bufferSize = bufferSize_;
     bufferL.resize(bufferSize);
     bufferR.resize(bufferSize);
     sampleRate = sampleRate_;
-    mod.modulationDepth = 0.0f;
-    mod.inc = 0.1f / sampleRate;
-    mod.reset();
   }
 
   Utils::Signal render(Utils::Signal input)
@@ -51,7 +38,7 @@ public:
 
   void write(Utils::Signal input)
   {
-
+    // float inputMod = synth->modMixer.getCurrentSample(synth->delayInputModIndex, synth->delayInputModDepth);
     bufferL[writePos] = (input.left * inputGain) + (bufferL[readPos] * feedback);
     bufferR[writePos] = (input.right * inputGain) + (bufferR[readPos] * feedback);
 
@@ -65,8 +52,8 @@ public:
   {
     Utils::Signal output;
 
-    float modVal = mod.nextSample();
-    float targetDelayMod = fmod(targetDelaytime * modVal, 1.0f);
+    // float modVal = synth->modMixer.getCurrentSample(synth->delayTimeModIndex, synth->delayTimeModDepth);
+    float targetDelayMod = fmod(targetDelaytime /* * modVal*/, 1.0f);
 
     if (delaytime != targetDelayMod)
     {
@@ -127,8 +114,6 @@ private:
   float sampleRate;
 
   Synth *synth;
-
-  Modulation mod;
 
   float delaytime{0.5f};
   float targetDelaytime{0.5f};

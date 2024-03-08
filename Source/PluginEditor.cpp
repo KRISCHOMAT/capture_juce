@@ -106,6 +106,68 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     delayModSpeedKnob.setSliderStyle(
         juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     delayModSpeedKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayModSpeedKnob);
+
+    // Modulation
+    grainDenseModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    grainDenseModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(grainDenseModDepthKnob);
+
+    grainLengthModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    grainLengthModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(grainLengthModDepthKnob);
+
+    playSpeedModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    playSpeedModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(playSpeedModDepthKnob);
+
+    delayTimeModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayTimeModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayTimeModDepthKnob);
+
+    delayLazynessModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayLazynessModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayLazynessModDepthKnob);
+
+    delayInputModDepthKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayInputModDepthKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayInputModDepthKnob);
+
+    grainDenseModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    grainDenseModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(grainDenseModIndexKnob);
+
+    grainLengthModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    grainLengthModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(grainLengthModIndexKnob);
+
+    playSpeedModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    playSpeedModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(playSpeedModIndexKnob);
+
+    delayTimeModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayTimeModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayTimeModIndexKnob);
+
+    delayLazynessModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayLazynessModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayLazynessModIndexKnob);
+
+    delayInputModIndexKnob.setSliderStyle(
+        juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    delayInputModIndexKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, textBoxWidth, textBoxHeight);
+    addAndMakeVisible(delayInputModIndexKnob);
 
     addAndMakeVisible(delayModSpeedKnob);
     // custom components
@@ -184,6 +246,30 @@ CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &
     dlModDepthLabel.attachToComponent(&delayModDepthKnob, false);
     dlModDepthLabel.setText("Mod-Depth", juce::NotificationType::dontSendNotification);
     dlModDepthLabel.setJustificationType(juce::Justification::centred);
+
+    grainDenseModLabel.attachToComponent(&grainDenseModDepthKnob, false);
+    grainDenseModLabel.setText("Dense", juce::NotificationType::dontSendNotification);
+    grainDenseModLabel.setJustificationType(juce::Justification::centred);
+
+    grainLengthModLabel.attachToComponent(&grainLengthModDepthKnob, false);
+    grainLengthModLabel.setText("Length", juce::NotificationType::dontSendNotification);
+    grainLengthModLabel.setJustificationType(juce::Justification::centred);
+
+    playSpeedModLabel.attachToComponent(&playSpeedModDepthKnob, false);
+    playSpeedModLabel.setText("Speed", juce::NotificationType::dontSendNotification);
+    playSpeedModLabel.setJustificationType(juce::Justification::centred);
+
+    delayTimeModLabel.attachToComponent(&delayTimeModDepthKnob, false);
+    delayTimeModLabel.setText("DL Time", juce::NotificationType::dontSendNotification);
+    delayTimeModLabel.setJustificationType(juce::Justification::centred);
+
+    delayLazynessModLabel.attachToComponent(&delayLazynessModDepthKnob, false);
+    delayLazynessModLabel.setText("DL Lazy", juce::NotificationType::dontSendNotification);
+    delayLazynessModLabel.setJustificationType(juce::Justification::centred);
+
+    delayInputModLabel.attachToComponent(&delayInputModDepthKnob, false);
+    delayInputModLabel.setText("DL In", juce::NotificationType::dontSendNotification);
+    delayInputModLabel.setJustificationType(juce::Justification::centred);
     setSize(600, 850);
 }
 
@@ -235,4 +321,19 @@ void CaptureAudioProcessorEditor::resized()
     delayOutputGainKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
     delayModSpeedKnob.setBounds(padding + knobWidth * 5, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
     delayModDepthKnob.setBounds(padding + knobWidth * 6, marginTop + knobHeight * 2 + 100, knobWidth, knobHeight);
+
+    // Modulation Row Depth
+    grainDenseModDepthKnob.setBounds(padding, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+    grainLengthModDepthKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+    playSpeedModDepthKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+    delayTimeModDepthKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+    delayLazynessModDepthKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+    delayInputModDepthKnob.setBounds(padding + knobWidth * 5, marginTop + knobHeight * 3 + 150, knobWidth, knobHeight);
+
+    grainDenseModIndexKnob.setBounds(padding, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
+    grainLengthModIndexKnob.setBounds(padding + knobWidth * 1, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
+    playSpeedModIndexKnob.setBounds(padding + knobWidth * 2, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
+    delayTimeModIndexKnob.setBounds(padding + knobWidth * 3, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
+    delayLazynessModIndexKnob.setBounds(padding + knobWidth * 4, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
+    delayInputModIndexKnob.setBounds(padding + knobWidth * 5, marginTop + knobHeight * 4 + 150, knobWidth, knobHeight);
 }

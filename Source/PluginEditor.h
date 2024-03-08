@@ -49,6 +49,46 @@ private:
     juce::Slider delayModDepthKnob;
     juce::Slider delayModSpeedKnob;
 
+    // Modulation
+    juce::Slider grainDenseModDepthKnob;
+    juce::Slider grainLengthModDepthKnob;
+    juce::Slider playSpeedModDepthKnob;
+    juce::Slider delayTimeModDepthKnob;
+    juce::Slider delayLazynessModDepthKnob;
+    juce::Slider delayInputModDepthKnob;
+
+    juce::Slider grainDenseModIndexKnob;
+    juce::Slider grainLengthModIndexKnob;
+    juce::Slider playSpeedModIndexKnob;
+    juce::Slider delayTimeModIndexKnob;
+    juce::Slider delayLazynessModIndexKnob;
+    juce::Slider delayInputModIndexKnob;
+
+    juce::Slider mod0Freq;
+    juce::Slider mod1Freq;
+    juce::Slider mod2Freq;
+    juce::Slider mod3Freq;
+
+    juce::Slider mix0Mod0;
+    juce::Slider mix0Mod1;
+    juce::Slider mix0Mod2;
+    juce::Slider mix0Mod3;
+
+    juce::Slider mix1Mod0;
+    juce::Slider mix1Mod1;
+    juce::Slider mix1Mod2;
+    juce::Slider mix1Mod3;
+
+    juce::Slider mix2Mod0;
+    juce::Slider mix2Mod1;
+    juce::Slider mix2Mod2;
+    juce::Slider mix2Mod3;
+
+    juce::Slider mix3Mod0;
+    juce::Slider mix3Mod1;
+    juce::Slider mix3Mod2;
+    juce::Slider mix3Mod3;
+
     // Labels
     juce::Label loopStartLabel;
     juce::Label loopLengthLabel;
@@ -69,6 +109,12 @@ private:
     juce::Label dlModDepthLabel;
     juce::Label dlModSpeedLabel;
 
+    juce::Label grainDenseModLabel;
+    juce::Label grainLengthModLabel;
+    juce::Label playSpeedModLabel;
+    juce::Label delayTimeModLabel;
+    juce::Label delayLazynessModLabel;
+    juce::Label delayInputModLabel;
     // Custom
     WaveViewer waveViewer;
     LevelMeter levelMeter;
@@ -140,13 +186,56 @@ private:
         audioProcessor.apvts,
         ParameterID::release.getParamID(),
         releaseKnob};
-    SliderAttachment dlModSpeedAttachment{
+
+    // Modulation
+    SliderAttachment grainDenseModDepthAttachment{
         audioProcessor.apvts,
-        ParameterID::delayModSpeed.getParamID(),
-        delayModSpeedKnob};
-    SliderAttachment dlModDepthAttachment{
+        ParameterID::grainDenseModDepth.getParamID(),
+        grainDenseModDepthKnob};
+    SliderAttachment grainLengthModDepthAttachment{
         audioProcessor.apvts,
-        ParameterID::delayModDepth.getParamID(),
-        delayModDepthKnob};
+        ParameterID::grainLengthModDepth.getParamID(),
+        grainLengthModDepthKnob};
+    SliderAttachment playSpeedModDepthAttachment{
+        audioProcessor.apvts,
+        ParameterID::playSpeedModDepth.getParamID(),
+        playSpeedModDepthKnob};
+    SliderAttachment delayTimeModDepthAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayTimeModDepth.getParamID(),
+        delayTimeModDepthKnob};
+    SliderAttachment delayLazynessModDepthAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayLazynessModDepth.getParamID(),
+        delayLazynessModDepthKnob};
+    SliderAttachment delayInputModDepthKnobAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayInputModDepth.getParamID(),
+        delayInputModDepthKnob};
+
+    SliderAttachment grainDenseModIndexAttachment{
+        audioProcessor.apvts,
+        ParameterID::grainDenseModIndex.getParamID(),
+        grainDenseModIndexKnob};
+    SliderAttachment grainLengthModIndexAttachment{
+        audioProcessor.apvts,
+        ParameterID::grainLengthModIndex.getParamID(),
+        grainLengthModIndexKnob};
+    SliderAttachment playSpeedModIndexAttachment{
+        audioProcessor.apvts,
+        ParameterID::playSpeedModIndex.getParamID(),
+        playSpeedModIndexKnob};
+    SliderAttachment delayTimeModIndexAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayTimeModIndex.getParamID(),
+        delayTimeModIndexKnob};
+    SliderAttachment delayLazynessModIndexAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayLazynessModIndex.getParamID(),
+        delayLazynessModIndexKnob};
+    SliderAttachment delayInputModIndexKnobAttachment{
+        audioProcessor.apvts,
+        ParameterID::delayInputModIndex.getParamID(),
+        delayInputModIndexKnob};
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CaptureAudioProcessorEditor)
 };

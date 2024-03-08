@@ -33,6 +33,18 @@ namespace ParameterID
   PARAMETER_ID(release)
   PARAMETER_ID(delayModSpeed)
   PARAMETER_ID(delayModDepth)
+  PARAMETER_ID(grainLengthModDepth)
+  PARAMETER_ID(grainDenseModDepth)
+  PARAMETER_ID(playSpeedModDepth)
+  PARAMETER_ID(delayTimeModDepth)
+  PARAMETER_ID(delayLazynessModDepth)
+  PARAMETER_ID(delayInputModDepth)
+  PARAMETER_ID(grainLengthModIndex)
+  PARAMETER_ID(grainDenseModIndex)
+  PARAMETER_ID(playSpeedModIndex)
+  PARAMETER_ID(delayTimeModIndex)
+  PARAMETER_ID(delayLazynessModIndex)
+  PARAMETER_ID(delayInputModIndex)
 }
 
 //==============================================================================
@@ -109,6 +121,20 @@ private:
   juce::AudioParameterFloat *delayModSpeedParam;
   juce::AudioParameterFloat *attackParam;
   juce::AudioParameterFloat *releaseParam;
+
+  juce::AudioParameterFloat *grainLengthModDepthParam;
+  juce::AudioParameterFloat *grainDenseModDepthParam;
+  juce::AudioParameterFloat *playSpeedModDepthParam;
+  juce::AudioParameterFloat *delayTimeModDepthParam;
+  juce::AudioParameterFloat *delayLazynessModDepthParam;
+  juce::AudioParameterFloat *delayInputModDepthParam;
+
+  juce::AudioParameterFloat *grainLengthModIndexParam;
+  juce::AudioParameterFloat *grainDenseModIndexParam;
+  juce::AudioParameterFloat *playSpeedModIndexParam;
+  juce::AudioParameterFloat *delayTimeModIndexParam;
+  juce::AudioParameterFloat *delayLazynessModIndexParam;
+  juce::AudioParameterFloat *delayInputModIndexParam;
 
   void valueTreePropertyChanged(juce::ValueTree &, const juce::Identifier &) override
   {

@@ -30,14 +30,30 @@ public:
     mods[2].setModulationType(Modulator::ModulationType::Square);
     mods[3].setModulationType(Modulator::ModulationType::Sine);
 
-    mods[0].setFreq(8.0f);
-    mods[1].setFreq(0.25f);
-    mods[2].setFreq(1.0f);
-    mods[3].setFreq(1.0f);
+    mods[0].setFreq(0.5f);
+    mods[1].setFreq(2.5f);
+    mods[2].setFreq(4.0f);
+    mods[3].setFreq(1.5f);
+
     setMixDepth(0, 0, 0.0f);
-    setMixDepth(0, 1, 0.0f);
-    setMixDepth(0, 2, 0.0f);
-    setMixDepth(0, 3, 1.0f);
+    setMixDepth(0, 1, 0.5f);
+    setMixDepth(0, 2, 0.5f);
+    setMixDepth(0, 3, 0.0f);
+
+    setMixDepth(1, 0, 0.0f);
+    setMixDepth(1, 1, 0.0f);
+    setMixDepth(1, 2, 0.0f);
+    setMixDepth(1, 3, 1.0f);
+
+    setMixDepth(2, 0, 1.0f);
+    setMixDepth(2, 1, 0.0f);
+    setMixDepth(2, 2, 0.0f);
+    setMixDepth(2, 3, 0.0f);
+
+    setMixDepth(3, 0, 0.5f);
+    setMixDepth(3, 1, 0.0f);
+    setMixDepth(3, 2, 0.5f);
+    setMixDepth(3, 3, 0.0f);
   }
 
   void update()
@@ -55,7 +71,6 @@ public:
     {
       sample += mods[i].currentSample * mixes[mixIndex][i];
     }
-    DBG(sample);
     return (sample * depth) + 1.0f;
   }
 
@@ -74,10 +89,10 @@ public:
     mods[modIndex].setModulationType(newType);
   }
 
-private:
   static constexpr int MOD_NUM = 4;
-  static constexpr int MIX_NUM = 4;
-
   Modulator mods[MOD_NUM];
+
+private:
+  static constexpr int MIX_NUM = 4;
   float mixes[MIX_NUM][MOD_NUM];
 };
