@@ -5,12 +5,10 @@
 class LevelMeter : public juce::Component, public juce::Timer
 {
 public:
-    LevelMeter(float const &inputRms_, float const &outputRmsL_, float const &outputRmsR_)
-        : inputRms(inputRms_), outputRmsL(outputRmsL_), outputRmsR(outputRmsR_)
+    LevelMeter(CaptureAudioProcessor *p)
+        : processor(p)
     {
-        // In your constructor, you should add any child components, and
-        // initialise any special settings that your component needs.
-        startTimerHz(30); // Adjust timer frequency as needed
+        startTimerHz(30);
     }
 
     ~LevelMeter() override {}
@@ -36,18 +34,15 @@ public:
 
     void timerCallback() override
     {
-        smooth(smoothedInputRms, inputRms);
-        smooth(smoothedOutputRmsL, outputRmsL);
-        smooth(smoothedOutputRmsR, outputRmsR);
+        smooth(smoothedInputRms, processor->inputRms);
+        smooth(smoothedOutputRmsL, processor->outputRmsL);
+        smooth(smoothedOutputRmsR, processor->outputRmsR);
 
-        // Repaint component
         repaint();
     }
 
 private:
-    float const &inputRms;
-    float const &outputRmsL;
-    float const &outputRmsR;
+    CaptureAudioProcessor *processor;
 
     float smoothedInputRms{0.0f};
     float smoothedOutputRmsL{0.0f};

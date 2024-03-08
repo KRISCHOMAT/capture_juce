@@ -11,7 +11,7 @@
 
 //==============================================================================
 CaptureAudioProcessorEditor::CaptureAudioProcessorEditor(CaptureAudioProcessor &p)
-    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(*this), levelMeter(p.inputRms, p.outputRmsL, p.outputRmsR)
+    : AudioProcessorEditor(&p), audioProcessor(p), waveViewer(*this), levelMeter(&p)
 {
 
     int textBoxWidth = 80;

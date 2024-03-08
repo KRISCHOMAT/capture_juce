@@ -10,6 +10,7 @@
 
 #include "Synth.h"
 #include <cstdint>
+#include "Utils.h"
 
 // Parameter Setters
 void Synth::setPlayHead(float playHead)
