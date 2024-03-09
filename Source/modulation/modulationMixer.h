@@ -31,14 +31,14 @@ public:
     mods[3].setModulationType(Modulator::ModulationType::Sine);
 
     mods[0].setFreq(0.5f);
-    mods[1].setFreq(2.5f);
-    mods[2].setFreq(4.0f);
+    mods[1].setFreq(0.5f);
+    mods[2].setFreq(0.20f);
     mods[3].setFreq(1.5f);
 
-    setMixDepth(0, 0, 0.0f);
+    setMixDepth(0, 0, 0.5f);
     setMixDepth(0, 1, 0.5f);
-    setMixDepth(0, 2, 0.5f);
-    setMixDepth(0, 3, 0.0f);
+    setMixDepth(0, 2, 0.8f);
+    setMixDepth(0, 3, 0.25f);
 
     setMixDepth(1, 0, 0.0f);
     setMixDepth(1, 1, 0.0f);
@@ -58,11 +58,11 @@ public:
 
   void update()
   {
+    normalize();
     for (int mod = 0; mod < MOD_NUM; mod++)
     {
       mods[mod].nextSample();
     }
-    normalize();
   }
 
   float getCurrentSample(uint8_t mixIndex, float depth, float offset = 1.0f)
@@ -103,10 +103,10 @@ public:
       }
       if (sum > 1.0f)
       {
-        float substractor = sum / MOD_NUM;
+        float scaleFactor = 1.0f / sum;
         for (int i = 0; i < MOD_NUM; i++)
         {
-          currentMix[i] -= substractor;
+          currentMix[i] *= scaleFactor;
         }
       }
     }
