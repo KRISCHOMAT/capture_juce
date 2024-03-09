@@ -13,6 +13,7 @@
 #include "Envelope.h"
 #include "Utils.h"
 #include "modulation/modulationMixer.h"
+#include "modulation/noise.h"
 
 class Synth;
 class AudioBuffer;
@@ -57,7 +58,7 @@ private:
 
   Envelope env;
 
-  juce::Random random;
+  Noise random;
 
   int writePos;
   float sampleRate;

@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include <JuceHeader.h>
 #include "Voice.h"
 #include "Synth.h"
 #include "AudioBuffer.h"
@@ -138,14 +137,14 @@ void Voice::activateGrain()
 
   if (grainTriggerInc++ >= triggerRateWithMod)
   {
-    float spray = random.nextFloat() * sprayFactor;
+    float spray = random.nextSample() * sprayFactor;
     for (int grain = 0; grain < GRAIN_NUMS; grain++)
     {
       if (!grains[grain].isActive())
       {
         playHead = playHead < loopStart ? loopStart : playHead;
         float withSpray = (playHead + spray > 1.0f) ? playHead : playHead + spray;
-        float pos = (random.nextFloat() - 0.5f) * 2 * spreadFactor;
+        float pos = (random.nextSample() - 0.5f) * 2 * spreadFactor;
         bool isReverse = synth->grainDir == Synth::PlaybackDir::Normal ? false : true;
         grains[grain].activateGrain(withSpray, grainLengthWithMod, pos, pitch, isReverse);
         break;

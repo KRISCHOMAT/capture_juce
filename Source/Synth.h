@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include <cstdint>
 #include "Voice.h"
 #include "Envelope.h"
 #include "AudioBuffer.h"

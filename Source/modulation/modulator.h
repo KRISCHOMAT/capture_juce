@@ -9,6 +9,7 @@
 */
 
 #pragma once
+#include <cstdint>
 #include "sine.h"
 #include "noise.h"
 #include "saw.h"
