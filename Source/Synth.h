@@ -12,8 +12,10 @@
 #include "Voice.h"
 #include "Envelope.h"
 #include "AudioBuffer.h"
-#include "effects/delay.h"
 #include "modulation/modulationMixer.h"
+#include "effects/delay.h"
+
+// class Delay;
 
 class Synth
 {

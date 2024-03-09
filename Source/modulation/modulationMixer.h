@@ -62,16 +62,17 @@ public:
     {
       mods[mod].nextSample();
     }
+    normalize();
   }
 
-  float getCurrentSample(uint8_t mixIndex, float depth)
+  float getCurrentSample(uint8_t mixIndex, float depth, float offset = 1.0f)
   {
     float sample = 0.0f;
     for (int i = 0; i < MOD_NUM; i++)
     {
       sample += mods[i].currentSample * mixes[mixIndex][i];
     }
-    return (sample * depth) + 1.0f;
+    return (sample * depth) + offset;
   }
 
   void setMixDepth(int mixIndex, int modIndex, float val)
@@ -89,10 +90,32 @@ public:
     mods[modIndex].setModulationType(newType);
   }
 
+  void normalize()
+  {
+    for (int mixIndex = 0; mixIndex < MIX_NUM; mixIndex++)
+    {
+
+      float *currentMix = mixes[mixIndex];
+      float sum = 0.0f;
+      for (int i = 0; i < MOD_NUM; i++)
+      {
+        sum += currentMix[i];
+      }
+      if (sum > 1.0f)
+      {
+        float substractor = sum / MOD_NUM;
+        for (int i = 0; i < MOD_NUM; i++)
+        {
+          currentMix[i] -= substractor;
+        }
+      }
+    }
+  }
+
+  static constexpr int MIX_NUM = 4;
   static constexpr int MOD_NUM = 4;
   Modulator mods[MOD_NUM];
 
 private:
-  static constexpr int MIX_NUM = 4;
   float mixes[MIX_NUM][MOD_NUM];
 };

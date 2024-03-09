@@ -2,7 +2,7 @@
   ==============================================================================
 
     delay.h
-    Created: 28 Jan 2024 7:32:02pm
+    Created: 8 Mar 2024 10:53:10am
     Author:  christiangrothe
 
   ==============================================================================
@@ -10,100 +10,25 @@
 
 #pragma once
 #include <vector>
-#include <cmath>
 #include "../Utils.h"
-#include "../Synth.h"
+
+class Synth;
 
 class Delay
 {
 public:
-  void init(Synth *synth_)
-  {
-    synth = synth_;
-  }
+  void init(Synth *synth_);
 
-  void setSize(int bufferSize_, float sampleRate_)
-  {
-    bufferSize = bufferSize_;
-    bufferL.resize(bufferSize);
-    bufferR.resize(bufferSize);
-    sampleRate = sampleRate_;
-  }
+  Utils::Signal nextSample();
+  Utils::Signal render(Utils::Signal input);
 
-  Utils::Signal render(Utils::Signal input)
-  {
-    write(input);
-    return nextSample();
-  }
-
-  void write(Utils::Signal input)
-  {
-    // float inputMod = synth->modMixer.getCurrentSample(synth->delayInputModIndex, synth->delayInputModDepth);
-    bufferL[writePos] = (input.left * inputGain) + (bufferL[readPos] * feedback);
-    bufferR[writePos] = (input.right * inputGain) + (bufferR[readPos] * feedback);
-
-    if (++writePos >= bufferSize)
-    {
-      writePos = 0.0f;
-    }
-  }
-
-  Utils::Signal nextSample()
-  {
-    Utils::Signal output;
-
-    // float modVal = synth->modMixer.getCurrentSample(synth->delayTimeModIndex, synth->delayTimeModDepth);
-    float targetDelayMod = fmod(targetDelaytime /* * modVal*/, 1.0f);
-
-    if (delaytime != targetDelayMod)
-    {
-      delaytime = Utils::lerp(delaytime, targetDelayMod, interpolationTime);
-    }
-
-    int offset = bufferSize * delaytime;
-    readPos = writePos - offset;
-
-    if (readPos < 0.0f)
-    {
-      readPos += bufferSize;
-    }
-
-    float sampleL = Utils::cubicHermiteSpline(bufferL.data(), static_cast<float>(readPos), bufferSize);
-    float sampleR = Utils::cubicHermiteSpline(bufferR.data(), static_cast<float>(readPos), bufferSize);
-
-    output.left = sampleL;
-    output.right = sampleR;
-
-    output *= outputGain;
-
-    return output;
-  }
-
-  void setFeedback(float feedback_)
-  {
-    feedback = feedback_;
-  }
-
-  void setDelaytime(float delaytime_)
-  {
-    targetDelaytime = delaytime_;
-  }
-
-  void setInputGain(float inputGain_)
-  {
-    inputGain = inputGain_;
-  }
-
-  void setOutputGain(float outputGain_)
-  {
-    outputGain = outputGain_;
-  }
-
-  void setInterpolationTime(float interpolationTime_)
-  {
-
-    interpolationTime = interpolationTime_ * 0.0001f;
-  }
+  void write(Utils::Signal input);
+  void setSize(int bufferSize_, float sampleRate_);
+  void setFeedback(float feedback_);
+  void setDelaytime(float delaytime_);
+  void setInputGain(float inputGain_);
+  void setOutputGain(float outputGain_);
+  void setInterpolationTime(float interpolationTime_);
 
 private:
   int writePos{0};
